@@ -1,5 +1,6 @@
 ﻿using System.ComponentModel;
 using System.Diagnostics;
+using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 
 namespace program
@@ -24,7 +25,7 @@ namespace program
             type = null;
             ID = 0;
         }
-        public Activitate(string _name, string _description, string _tip, List<Activitate> activitati) // Constructorul ai clasei
+        public Activitate(string _name, string _description, string _tip, Dictionary<int, Activitate> activitati) // Constructorul ai clasei
         {
             name = _name;
             description = _description;
@@ -51,6 +52,8 @@ namespace program
 
         public Scheduled_activity(int activityID, TimeOnly _start_time, TimeOnly _endtime)
         {
+            if (_start_time < _endtime)
+                throw new Exception("Nu poate fi ora de inceput mai mica de cat ora de sfarsit");
             ID = activityID;
             start_time = _start_time;
             end_time = _endtime;
@@ -73,46 +76,45 @@ namespace program
     //clasa activitatilor in saptamana adica oraru nostrul
     public class Orar
     {
-        public List<Activitate> activities; // lista cu activitati disponibile cu posibilitatea de adaugare a noii activitati
+        public Dictionary<int, Activitate> activities; // lista cu activitati disponibile cu posibilitatea de adaugare a noii activitati
         
         public Dictionary<DayOfWeek, List<Scheduled_activity>> scheduled_week;
 
         public Orar()
         {
-            scheduled_week = new Dictionary<DayOfWeek, List<Scheduled_activity>>();
-            activities = new List<Activitate>();
+            activities = new Dictionary<int, Activitate>(); // dictionar cu activitati
+
+            scheduled_week = new Dictionary<DayOfWeek, List<Scheduled_activity>>(); // orarul
 
             foreach (DayOfWeek day in Enum.GetValues(typeof(DayOfWeek)))
             {
                 scheduled_week[day] = new List<Scheduled_activity>();
             }
         }
-        public Orar(List<Activitate> old_activities) // constructor de copiere a listei de activitati
+        public Orar(Dictionary<int, Activitate> old_activities) // constructor de copiere a listei de activitati
         {
-            activities = old_activities.Select(a => new Activitate { name = a.name, 
-                description = a.description, 
-                type = a.type, 
-                ID = a.ID}).ToList(); // copierea listei de activitati
+            activities = new Dictionary<int, Activitate>(old_activities); // copierea listei de activitati
             scheduled_week = new Dictionary<DayOfWeek, List<Scheduled_activity>>();
         }
 
         public void add_activityToList(Activitate activitate)
         {
-            if (activities.Contains(activitate))
+            if (activities.Keys.Contains(activitate.ID))
             {
                 return;
             }
             else {
-                activities.Add(activitate);
+                activities.Add(activities.Count+1, activitate);
             }
         }
         public void remove_activitybyID(int ID) // remove activitatea dupa ID
         {
-            foreach (Activitate activitate in activities)
+            foreach (int Key in activities.Keys)
             {
-                if (activitate.ID == ID)
+                if (Key == ID)
                 {
-                    activities.Remove(activitate);
+                    activities.Remove(Key);
+                    break;
                 }
             }
         }
@@ -151,7 +153,7 @@ namespace program
         //adaugare din lista de activitati la intervalul dat
         public void add_activity_fromList(int ID, TimeOnly start, TimeOnly end, DayOfWeek day) 
         {
-            var activity = activities.FirstOrDefault(a => a.ID == ID);
+            var activity = activities[ID];
             if (activity == null)
             {
                 throw new ArgumentException("Activitatea nu a fost gasita!");
@@ -174,6 +176,20 @@ namespace program
             }
             scheduled_week[day].Insert(pos, new Scheduled_activity(ID, start, end));
         }
+
+        public string show_orar()
+        {
+            string buffer="";
+            foreach(var key in scheduled_week.Keys)
+            {
+                foreach(Scheduled_activity act in scheduled_week[key])
+                {
+                    buffer += act.INFO(activities[act.ID])+"\n";
+                }
+            }
+            return buffer;
+        }
+
     }
 
     public class program
@@ -181,14 +197,54 @@ namespace program
         public static void Main(string[] args)
         {
             Orar sapt = new Orar();
-            /*
+            
             Activitate activitate1 = new Activitate("Acti21", "Loh123", "asdfds", sapt.activities);
             sapt.add_activityToList(activitate1);
 
             sapt.add_activity_fromList(1, new TimeOnly(13, 00), new TimeOnly(14, 00), DayOfWeek.Monday);
-            */
-            
 
+            activitate1 = citireactivitate(sapt.activities);
+            sapt.add_activityToList(activitate1);
+
+            Scheduled_activity Sactivity = citire_Scheduledactivity(sapt.activities);
+
+            sapt.add_ScheduledActivity_toSchedule(Sactivity, (DayOfWeek)3);
+
+            Console.WriteLine(sapt.show_orar());
+        }
+
+        public static Activitate citireactivitate(Dictionary<int, Activitate> dict)
+        {
+            string nume, descriere, tip;
+            Console.WriteLine("Introduceti numele activitatii: ");
+            nume = Console.ReadLine();
+            Console.WriteLine("Introduceti descrierea activitatii: ");
+            descriere = Console.ReadLine();
+            Console.WriteLine("Introduceti tipul activitatii: ");
+            tip = Console.ReadLine();
+            return new Activitate(nume, descriere, tip, dict);
+        }
+        public static Scheduled_activity citire_Scheduledactivity(Dictionary<int, Activitate> dict) 
+        {
+            string nume, descriere, tip;
+            TimeOnly start, stop;
+
+            Console.WriteLine("Introduceti numele activitatii: ");
+            nume = Console.ReadLine();
+            Console.WriteLine("Introduceti descrierea activitatii: ");
+            descriere = Console.ReadLine();
+            Console.WriteLine("Introduceti tipul activitatii: ");
+            tip = Console.ReadLine();
+
+            Activitate new_activitate = new Activitate(nume, descriere, tip, dict);
+            dict.Add(new_activitate.ID, new_activitate);
+
+            Console.WriteLine("Introduceti timpul de inceput a activitatii: ");
+            start = TimeOnly.Parse(Console.ReadLine());
+            Console.WriteLine("Introduceti timpul de sfarsit a activitatii: ");
+            stop = TimeOnly.Parse(Console.ReadLine());
+
+            return new Scheduled_activity(new_activitate.ID, start, stop);
         }
     }
 }

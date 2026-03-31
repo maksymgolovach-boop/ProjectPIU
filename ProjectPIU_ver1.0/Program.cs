@@ -14,18 +14,95 @@ namespace program
         public static void Main(string[] args)
         {
             Orar sapt = new Orar();
+
+            TimeOnly start, stop;
+            string optiune, nume;
+            Activitate? activitate1 = null;
+            int day, id;
             try
             {
-                Activitate activitate1 = new Activitate("Sala", "Antrenarea pentru sanatate", "Sanatate curata");
-                sapt.add_activityToList(activitate1);
+                do
+                {
+                    Console.WriteLine("C. Citire informatii activitate de la tastatura");
+                    Console.WriteLine("I. Afisarea informatiilor despre ultima activitate introdusa");
+                    Console.WriteLine("A. Afisare activitati din lista");
+                    Console.WriteLine("S. Salvare activitate in lista");
+                    Console.WriteLine("L. Introducere activitate in orar dupa ID");
+                    Console.WriteLine("F. Introducere activitate in orar dupa Nume");
+                    Console.WriteLine("O. Afisare orar");
+                    Console.WriteLine("X. Inchidere program");
 
-                sapt.add_activity_fromList(1, new TimeOnly(13, 00), new TimeOnly(14, 00), WeekDays.Monday);
-                activitate1 = new Activitate("Drocika", "Jestkaya drocika pe ceava", "Sanatate");
-                sapt.add_activityToList(activitate1);
+                    Console.WriteLine("Alegeti o optiune");
+                    optiune = Console.ReadLine()?.ToUpper() ?? string.Empty;
 
-                sapt.add_activity_fromList(2, new TimeOnly(14, 00), new TimeOnly(16, 00), WeekDays.Monday);
+                    switch (optiune)
+                    {
+                        case "C":
+                            activitate1 = citireactivitate();
+                            break;
 
-                Console.WriteLine(sapt.show_orar());
+                        case "I":
+                            if (activitate1 != null)
+                                Console.WriteLine(activitate1.INFO());
+                            break;
+
+                        case "A":
+                            Console.WriteLine(sapt.activitatiList.show_activitylist());
+                            break;
+
+                        case "S":
+                            if (activitate1 != null)
+                            {
+                                sapt.activitatiList.add_activityToList(activitate1);
+                                Console.WriteLine("activitate salvata.");
+                            }
+                            else
+                            {
+                                Console.WriteLine("Activitatea nu a fost initializata");
+                            }
+                            break;
+
+                        case "L":
+                            Console.Write("ID-ul activitati:");
+                            id = Int32.Parse(Console.ReadLine());
+                            Console.Write("Introduceti numarul zilei[1,2,3,4,5,6,7]: ");
+                            day = Int32.Parse(Console.ReadLine());
+                            Console.Write("Introduceti ora de inceput a activitatii: ");
+                            start = TimeOnly.Parse(Console.ReadLine());
+                            Console.Write("Introduceti ora de sfarsit a activitatii: ");
+                            stop = TimeOnly.Parse(Console.ReadLine());
+
+                            sapt.add_activity_fromList(id, start, stop, (WeekDays)day);
+                            break;
+
+                        case "F":
+                            Console.Write("Numele activitati:");
+                            nume = Console.ReadLine();
+                            Console.Write("Introduceti numarul zilei[1,2,3,4,5,6,7]: ");
+                            day = Int32.Parse(Console.ReadLine());
+                            Console.Write("Introduceti ora de inceput a activitatii: ");
+                            start = TimeOnly.Parse(Console.ReadLine());
+                            Console.Write("Introduceti ora de sfarsit a activitatii: ");
+                            stop = TimeOnly.Parse(Console.ReadLine());
+
+                            adaugaActivitateDupanume(nume, sapt, start, stop, (WeekDays)day);
+                            break;
+
+                        case "O":
+                            Console.WriteLine(sapt.show_orar());
+                            break;
+
+                        case "X":
+                            Console.WriteLine("Aplicatia va fi inchisa");
+                            return;
+
+                        default:
+                            Console.WriteLine("Optiune inexistenta");
+                            break;
+                    }
+
+                } while (optiune.ToUpper() != "X");
+                Console.ReadKey();
             }
             catch (Exception ex)
             {
@@ -73,7 +150,7 @@ namespace program
         // adauga activitate din lista dupa nume
         public static void adaugaActivitateDupanume(string nume, Orar orar, TimeOnly start, TimeOnly stop, WeekDays day)
         {
-            var found_activity = orar.activities.Values.Where(a => a.name == nume);
+            var found_activity = orar.activitatiList.activities.Values.Where(a => a.name == nume);
             if (found_activity == null)
                 throw new ArgumentException($"Nu a fost gasita activitatea {nume} in lista de activitati");
             else if (found_activity.Count() != 1)

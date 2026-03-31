@@ -6,43 +6,46 @@ namespace StocareOrar
     //clasa activitatilor in saptamana adica oraru nostrul
     public class Orar
     {
-        public Dictionary<int, Activitate> activities; // lista cu activitati disponibile cu posibilitatea de adaugare a noii activitati
+        private const string SEPARATOR_FISIER = ";";
+        private const string SEPARATOR_SECUNDAR_FISIER = " ";
+        private const string SEPARATOR_TERTIAR = "-";
 
+        private const int DAY_POS = 0;
+        private const int ID_SCHEDULED_ACTIVITY_POS = 1;
+        private const int START_TIME_POS = 2;
+        private const int END_TIME_POS = 3;
+
+        public Activitati activitatiList;
         public Dictionary<WeekDays, List<Scheduled_activity>> scheduled_week;
 
         public Orar()
         {
-            activities = new Dictionary<int, Activitate>(); // dictionar cu activitati
-
-            scheduled_week = new Dictionary<WeekDays, List<Scheduled_activity>>(); // orarul
+            activitatiList = new Activitati();
+            scheduled_week = new Dictionary<WeekDays, List<Scheduled_activity>>(); // orarul de activitati
 
             foreach (WeekDays day in Enum.GetValues(typeof(WeekDays)))
             {
                 scheduled_week[day] = new List<Scheduled_activity>();
             }
         }
+        /// Completeaza!!!
+        public Orar(string sirfisier) // counstructor la citire din fisier
+        {
+            string[] strPrincipal = sirfisier.Split(SEPARATOR_SECUNDAR_FISIER);
+            string[] strActivitati = strPrincipal[0].Split(SEPARATOR_FISIER);
+        }
+
         public Orar(Dictionary<int, Activitate> old_activities) // constructor de copiere a listei de activitati
         {
-            activities = new Dictionary<int, Activitate>(old_activities); // copierea listei de activitati
+            activitatiList = new Activitati(old_activities);
             scheduled_week = new Dictionary<WeekDays, List<Scheduled_activity>>();
         }
 
-        public void add_activityToList(Activitate activitate) // ada
+        public void remove_activitybyID(int IDtoRemove) // elimina toate activitatile cu acelasi ID din orar dupa ID
         {
-            if (activities.Keys.Contains(activitate.ID))
+            if (activitatiList.activities.ContainsKey(IDtoRemove))
             {
-                throw new Exception("Activitatea deja exista in lista!!!");
-            }
-            else
-            {
-                activities.Add(activitate.ID, activitate);
-            }
-        }
-        public void remove_activitybyID(int IDtoRemove) // remove activitatea din dupa ID
-        {
-            if (activities.ContainsKey(IDtoRemove))
-            {
-                activities.Remove(IDtoRemove);
+                activitatiList.activities.Remove(IDtoRemove);
                 foreach (var day in scheduled_week.Keys)
                 {
                     scheduled_week[day].RemoveAll(s => s.ID == IDtoRemove);
@@ -59,8 +62,8 @@ namespace StocareOrar
             foreach (Scheduled_activity sactivity in scheduled_week[day])
             {
                 if (sactivity.IfOverlap(SchedActivity))
-                    throw new Exception($"Activitatea din orar {activities[sactivity.ID]} " +
-                        $"se suprapune cu {activities[SchedActivity.ID]} orar");
+                    throw new Exception($"Activitatea din orar {activitatiList.activities[sactivity.ID]} " +
+                        $"se suprapune cu {activitatiList.activities[SchedActivity.ID]} orar");
             }
             //cauta la care pozitie trebuie inserata
             int pos = 0;
@@ -83,7 +86,7 @@ namespace StocareOrar
         //adaugare din lista de activitati la intervalul dat
         public void add_activity_fromList(int ID, TimeOnly start, TimeOnly end, WeekDays day)
         {
-            var activity = activities[ID];
+            var activity = activitatiList.activities[ID];
             if (activity == null)
             {
                 throw new ArgumentException("Activitatea nu a fost gasita!");
@@ -116,7 +119,7 @@ namespace StocareOrar
                 buffer += "<---------- " + key.ToString() + " ---------->\n";
                 foreach (Scheduled_activity act in scheduled_week[key])
                 {
-                    buffer += act.INFO(activities[act.ID]) + "\n";
+                    buffer += act.INFO(activitatiList.activities[act.ID]) + "\n";
                 }
             }
             return buffer;
@@ -129,6 +132,23 @@ namespace StocareOrar
             scheduled_week[day].RemoveAll(a => a.IfOverlap(testSActivity));
         }
 
-        
+        public string ConversiaLaString()
+        {
+            string SirPentruFisier="", List_pt_fisier="", orar_pt_fifiser="";
+            foreach(Activitate act in activitatiList.activities.Values)
+            {
+                List_pt_fisier += act.ConversiePentruScriereFisier() + SEPARATOR_SECUNDAR_FISIER;
+            }
+            foreach(var day in scheduled_week.Keys)
+            {
+                orar_pt_fifiser += day.ToString() + SEPARATOR_TERTIAR;
+                foreach(Scheduled_activity act in scheduled_week[day])
+                {
+                    orar_pt_fifiser += act.ID + SEPARATOR_FISIER + act.start_time + SEPARATOR_FISIER + act.end_time;
+                }
+            }
+            SirPentruFisier = List_pt_fisier + SEPARATOR_SECUNDAR_FISIER + orar_pt_fifiser;
+            return SirPentruFisier;
+        }
     }
 }

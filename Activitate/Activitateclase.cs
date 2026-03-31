@@ -1,7 +1,17 @@
-﻿namespace Activitateclase
+﻿using System.ComponentModel.Design.Serialization;
+
+namespace Activitateclase
 {
     public class Activitate
     {
+        private const string SEPARATOR_FISIER = ";";
+        private const string SEPARATOR_SECUNDAR_FISIER = " ";
+
+        private const int ID_pos = 0;
+        private const int NUME_pos = 1;
+        private const int DESCRIPTION_pos = 2;
+        private const int TYPE_pos = 3;
+
         //instantele clasei
         public string name { get; set; }
         public string description { get; set; }
@@ -32,38 +42,26 @@
                 $"Descrierea: {description}\n" +
                 $"Tip: {type}\n";
         }
-        public string getname()
-        {
-            return name;
-        }
-    }
 
-    public class Scheduled_activity //clasa ce va contine activitatea cu ora start si ora stop
-    {
-        public int ID { get; set; }
-        public TimeOnly start_time { get; set; }
-        public TimeOnly end_time { get; set; }
-
-        public Scheduled_activity(int activityID, TimeOnly _start_time, TimeOnly _endtime)
+        public Activitate(string strFisier) //citire activitate din fisier
         {
-            if (_start_time > _endtime)
-                throw new ArgumentException("Ora de început nu poate fi după ora de sfarsit.");
-            ID = activityID;
-            start_time = _start_time;
-            end_time = _endtime;
+            string[] FisierActivitate = strFisier.Split(SEPARATOR_FISIER);
+            this.ID = Convert.ToInt32(FisierActivitate[ID_pos]);
+            this.name = FisierActivitate[NUME_pos];
+            this.description = FisierActivitate[DESCRIPTION_pos];
+            this.type = FisierActivitate[TYPE_pos];
         }
-        public bool IfOverlap(Scheduled_activity other)
+        
+        public string ConversiePentruScriereFisier()
         {
-            if (start_time < other.end_time && end_time > other.start_time)
-            {
-                return true;
-            }
-            return false;
+            string ObjActivitateFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}", 
+                SEPARATOR_FISIER,
+                this.ID.ToString(),
+                this.name ?? ("NEDEFINIT"),
+                this.description ?? ("NU ESTE NICI O DESCRIERE"),
+                this.type ?? ("NU A FOST DEFINIT")
+                );
+            return ObjActivitateFisier;
         }
-        public string INFO(Activitate activity)
-        {
-            return $"{start_time}-{end_time} : {activity.getname()}";
-        }
-
     }
 }

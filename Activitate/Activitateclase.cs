@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.Design.Serialization;
 
-namespace Activitateclase
+namespace LibrarieModele
 {
     public class Activitate
     {
@@ -16,9 +16,7 @@ namespace Activitateclase
         public string name { get; set; }
         public string description { get; set; }
         public string type { get; set; }
-        public int ID { get; set; }
-
-        public static int _nextID = 0;
+        public Guid ID { get; set; }
 
         //definirea metodelor
         public Activitate() // Constructorul implicit ai clasei
@@ -26,15 +24,13 @@ namespace Activitateclase
             name = null;
             description = null;
             type = null;
-            ID = 0;
         }
         public Activitate(string _name, string _description, string _tip) // Constructorul ai clasei
         {
             name = _name;
             description = _description;
             type = _tip;
-            ID = _nextID + 1;
-            _nextID++;
+            ID = Guid.NewGuid();
         }
         public string INFO()
         {
@@ -46,7 +42,7 @@ namespace Activitateclase
         public Activitate(string strFisier) //citire activitate din fisier
         {
             string[] FisierActivitate = strFisier.Split(SEPARATOR_FISIER);
-            this.ID = Convert.ToInt32(FisierActivitate[ID_pos]);
+            this.ID = Guid.Parse(FisierActivitate[ID_pos]);
             this.name = FisierActivitate[NUME_pos];
             this.description = FisierActivitate[DESCRIPTION_pos];
             this.type = FisierActivitate[TYPE_pos];

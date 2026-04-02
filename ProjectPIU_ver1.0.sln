@@ -5,9 +5,9 @@ VisualStudioVersion = 17.11.35219.272
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ProjectPIU_ver1.0", "ProjectPIU_ver1.0\ProjectPIU_ver1.0.csproj", "{59D67CDA-5FF6-421B-A186-B2CB2784EC1D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Activitate", "Activitate\Activitate.csproj", "{0A1149A6-EB7C-4B57-B4AE-4247386771A6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarieModele", "Activitate\LibrarieModele.csproj", "{0A1149A6-EB7C-4B57-B4AE-4247386771A6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "StocareOrar", "StocareOrar\StocareOrar.csproj", "{F9C99B18-D30E-488C-8D4D-E57F1D20F6A5}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NivelStocareDate", "StocareOrar\NivelStocareDate.csproj", "{F9C99B18-D30E-488C-8D4D-E57F1D20F6A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

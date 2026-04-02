@@ -3,22 +3,24 @@ using System.Diagnostics;
 using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 
-using Activitateclase;
-using StocareOrar;
+using LibrarieModele;
+using NivelStocareDate;
 using Zile.Core;
 
-namespace program
+namespace Program
 {
-    public class program
+    public class Program
     {
         public static void Main(string[] args)
         {
-            Orar sapt = new Orar();
-
+            IstocareDateActivities activities = ManagerStocare.GetAdministratorStocareActivitati();
+            IstocareDateOrar adminOrar = ManagerStocare.GetAdministratorStocareOrar(activities);
+            
             TimeOnly start, stop;
             string optiune, nume;
             Activitate? activitate1 = null;
-            int day, id;
+            int day; 
+            Guid id;
             try
             {
                 do
@@ -27,8 +29,7 @@ namespace program
                     Console.WriteLine("I. Afisarea informatiilor despre ultima activitate introdusa");
                     Console.WriteLine("A. Afisare activitati din lista");
                     Console.WriteLine("S. Salvare activitate in lista");
-                    Console.WriteLine("L. Introducere activitate in orar dupa ID");
-                    Console.WriteLine("F. Introducere activitate in orar dupa Nume");
+                    Console.WriteLine("L. Introducere activitate in orar dupa Nume");
                     Console.WriteLine("O. Afisare orar");
                     Console.WriteLine("X. Inchidere program");
 
@@ -47,13 +48,12 @@ namespace program
                             break;
 
                         case "A":
-                            Console.WriteLine(sapt.activitatiList.show_activitylist());
+                            Console.WriteLine(show_activitylist(activities.GetActivities()));
                             break;
-
                         case "S":
                             if (activitate1 != null)
                             {
-                                sapt.activitatiList.add_activityToList(activitate1);
+                                activities.add_activityToList(activitate1);
                                 Console.WriteLine("activitate salvata.");
                             }
                             else
@@ -62,9 +62,10 @@ namespace program
                             }
                             break;
 
-                        case "L":
-                            Console.Write("ID-ul activitati:");
-                            id = Int32.Parse(Console.ReadLine());
+                        case "LO":
+                            Console.WriteLine("Scrieti denumirea activitatii:");
+                            nume = Console.ReadLine();
+                            id = activities.FindActivitiesByName(nume).First().ID;
                             Console.Write("Introduceti numarul zilei[1,2,3,4,5,6,7]: ");
                             day = Int32.Parse(Console.ReadLine());
                             Console.Write("Introduceti ora de inceput a activitatii: ");
@@ -72,24 +73,23 @@ namespace program
                             Console.Write("Introduceti ora de sfarsit a activitatii: ");
                             stop = TimeOnly.Parse(Console.ReadLine());
 
-                            sapt.add_activity_fromList(id, start, stop, (WeekDays)day);
+                            adminOrar.add_activity_fromList(id, start, stop, (WeekDays)day);
                             break;
 
-                        case "F":
-                            Console.Write("Numele activitati:");
-                            nume = Console.ReadLine();
-                            Console.Write("Introduceti numarul zilei[1,2,3,4,5,6,7]: ");
-                            day = Int32.Parse(Console.ReadLine());
-                            Console.Write("Introduceti ora de inceput a activitatii: ");
-                            start = TimeOnly.Parse(Console.ReadLine());
-                            Console.Write("Introduceti ora de sfarsit a activitatii: ");
-                            stop = TimeOnly.Parse(Console.ReadLine());
-
-                            adaugaActivitateDupanume(nume, sapt, start, stop, (WeekDays)day);
+                        case "RA":
+                            activities.removeActivity(activitate1);
                             break;
 
                         case "O":
-                            Console.WriteLine(sapt.show_orar());
+                            Console.WriteLine(adminOrar.getOrarStr());
+                            break;
+
+                        case "R":
+                            nume = Console.ReadLine();
+                            activitate1 = activities.FindActivitiesByName(nume).First();
+                            Console.Write("Introduceti numarul zilei[1,2,3,4,5,6,7]: ");
+                            day = Int32.Parse(Console.ReadLine());
+                            adminOrar.RemoveAllActivities(activitate1.ID, (WeekDays)day);
                             break;
 
                         case "X":
@@ -107,6 +107,7 @@ namespace program
             catch (Exception ex)
             {
                 Console.WriteLine(ex.ToString());
+                
             }
         }
 
@@ -124,7 +125,7 @@ namespace program
         }
 
         // citire activitate cu interval de la tastatura
-        public static Scheduled_activity citire_Scheduledactivity(Dictionary <int, Activitate> orar) 
+        public static Scheduled_activity citire_Scheduledactivity(Dictionary <Guid, Activitate> orar) 
         {
             string nume, descriere, tip;
             TimeOnly start, stop;
@@ -147,26 +148,14 @@ namespace program
             return new Scheduled_activity(new_activitate.ID, start, stop);
         }
 
-        // adauga activitate din lista dupa nume
-        public static void adaugaActivitateDupanume(string nume, Orar orar, TimeOnly start, TimeOnly stop, WeekDays day)
+        public static string show_activitylist(Dictionary<Guid, Activitate> activities)
         {
-            var found_activity = orar.activitatiList.activities.Values.Where(a => a.name == nume);
-            if (found_activity == null)
-                throw new ArgumentException($"Nu a fost gasita activitatea {nume} in lista de activitati");
-            else if (found_activity.Count() != 1)
+            string buffer = "";
+            foreach (var key in activities.Keys)
             {
-                Console.WriteLine("Au fost gasite mai multe activitati cu acelasi nume, alegeti pe cea dorita");
-                foreach (var activity in found_activity)
-                    Console.WriteLine($"Activitatea {activity.ID} cu numele {activity.name} de tipul {activity.type}\n" +
-                        $"Descrierea: {activity.description}");
-                Console.Write("Introduceti numarul activitatii dorite:");
-                int _id = int.Parse(Console.ReadLine());
-                orar.add_activity_fromList(_id, start, stop, day);
+                buffer += $"ID: {key} \n" + activities[key].INFO() + "\n";
             }
-            else
-            {
-                orar.add_activity_fromList(found_activity.First().ID, start, stop, day);
-            }
+            return buffer;
         }
     }
 }

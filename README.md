@@ -3,11 +3,16 @@
 ## Versiunea de lucru local
 Planificarea saptamanei este un proiect
 
-Pentru data de 19.03.2026 a fost realizata:
-1. Citirea de la tastatura a activitatii
-2. Citirea de la tastatura activitatii orare si adaugarea imaginii activitatii in lista de activitati al proiectului respectiv
-3. Afisarea completa a orarului
-
-Pentru data viitoare obiectivele principale sunt:
-1. Proiectarea meniu-ului utilizator
-2. Tratarea exceptiilor fara oprirea completa a programului
+La momentul dat au fost realizate functiile:
+1. Pentru lista de activitati:
+   + Adaugare/Stergere activiatii din lista/fisier
+   + Cautare activitati dupa nume
+   + Scrierea activitatilor in fisier text
+   + Operarea cu lista de activitati direct in fisier text
+   + Conversia din fisier in memorie
+2. Pentru orar:
+   + Adaugare activitate in orar din lista de activitati
+   + Stergerea completa a unei activitati din orar
+   + Stergerea unei activitati din ziua respectiva
+   + Operarea pe fisier cu orar
+   + Conversia din fisier in memorie

@@ -1,20 +1,17 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <OutputType>Exe</OutputType>
     <TargetFramework>net8.0</TargetFramework>
-    <RootNamespace>ProjectPIU_ver1._0</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
-	<PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.4" />
+    <PackageReference Include="System.Configuration.ConfigurationManager" Version="10.0.4" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Activitate\LibrarieModele.csproj" />
-	  <ProjectReference Include="..\StocareOrar\NivelStocareDate.csproj" />
   </ItemGroup>
 
 </Project>

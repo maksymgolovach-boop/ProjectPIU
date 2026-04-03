@@ -1,0 +1,17 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Activitate\LibrarieModele.csproj" />
+    <ProjectReference Include="..\ProjectPIU_ver1.0\ProjectPIU_ver1.0.csproj" />
+    <ProjectReference Include="..\StocareOrar\NivelStocareDate.csproj" />
+  </ItemGroup>
+
+</Project>

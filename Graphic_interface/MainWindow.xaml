@@ -1,0 +1,26 @@
+﻿<Window x:Class="Graphic_interface.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Graphic_interface"
+        mc:Ignorable="d"
+        Title="Orarul personal" Height="450" Width="900" Background="#7461D4"
+        WindowStyle="SingleBorderWindow">
+
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+
+            <Label Content="Lista de activitati" Foreground="#D6DB90" 
+                   HorizontalAlignment="Center" FontSize="20"/>
+
+            <Button Click="RefreshActivitiesButton" Content="Actualizează" Background="#5A17B2" Foreground="#D6DB90" 
+                    Width="100" Margin="10"/>
+
+            <ListBox x:Name="lstActivitati" Height="200" Width="400" 
+                     Background="White" Margin="10"/>
+            <Label x:Name="act1"></Label>
+            
+        </StackPanel>
+    </Grid>
+</Window>

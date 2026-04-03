@@ -1,58 +1,42 @@
-﻿using Activitateclase;
+﻿using LibrarieModele;
 using WeekDays = Zile.Core.WeekDays;
 
-namespace StocareOrar
+namespace NivelStocareDate
 {
     //clasa activitatilor in saptamana adica oraru nostrul
-    public class Orar
+    public class AdministrareOrarMemorie : IstocareDateOrar
     {
         private const string SEPARATOR_FISIER = ";";
         private const string SEPARATOR_SECUNDAR_FISIER = " ";
-        private const string SEPARATOR_TERTIAR = "-";
 
-        private const int DAY_POS = 0;
-        private const int ID_SCHEDULED_ACTIVITY_POS = 1;
-        private const int START_TIME_POS = 2;
-        private const int END_TIME_POS = 3;
 
-        public Activitati activitatiList;
+        private readonly IstocareDateActivities activitatiList;
+
         public Dictionary<WeekDays, List<Scheduled_activity>> scheduled_week;
-
-        public Orar()
+        /// sa nu uiti a modifica constructorul!!!
+        public AdministrareOrarMemorie(IstocareDateActivities activities)
         {
-            activitatiList = new Activitati();
+            activitatiList = activities;
             scheduled_week = new Dictionary<WeekDays, List<Scheduled_activity>>(); // orarul de activitati
-
             foreach (WeekDays day in Enum.GetValues(typeof(WeekDays)))
             {
                 scheduled_week[day] = new List<Scheduled_activity>();
             }
         }
-        /// Completeaza!!!
-        public Orar(string sirfisier) // counstructor la citire din fisier
-        {
-            string[] strPrincipal = sirfisier.Split(SEPARATOR_SECUNDAR_FISIER);
-            string[] strActivitati = strPrincipal[0].Split(SEPARATOR_FISIER);
-        }
 
-        public Orar(Dictionary<int, Activitate> old_activities) // constructor de copiere a listei de activitati
+        public AdministrareOrarMemorie(Dictionary<Guid, Activitate> old_activities) // constructor de copiere a listei de activitati
         {
-            activitatiList = new Activitati(old_activities);
+            activitatiList = new AdministrareActivitatiMemorie(old_activities);
             scheduled_week = new Dictionary<WeekDays, List<Scheduled_activity>>();
         }
-
-        public void remove_activitybyID(int IDtoRemove) // elimina toate activitatile cu acelasi ID din orar dupa ID
+        public Dictionary<Guid, Activitate> GetActivitiesList()
         {
-            if (activitatiList.activities.ContainsKey(IDtoRemove))
-            {
-                activitatiList.activities.Remove(IDtoRemove);
-                foreach (var day in scheduled_week.Keys)
-                {
-                    scheduled_week[day].RemoveAll(s => s.ID == IDtoRemove);
-                }
-            }
-            else
-                throw new Exception("Activitatea nu exista in lista de activitati, deci nu poate fi eliminata");
+            return activitatiList.GetActivities();
+        }
+
+        public Dictionary<WeekDays, List<Scheduled_activity>> GetOrar()
+        {
+            return scheduled_week;
         }
 
         //adaugare activitate dupa rand in orar
@@ -62,8 +46,8 @@ namespace StocareOrar
             foreach (Scheduled_activity sactivity in scheduled_week[day])
             {
                 if (sactivity.IfOverlap(SchedActivity))
-                    throw new Exception($"Activitatea din orar {activitatiList.activities[sactivity.ID]} " +
-                        $"se suprapune cu {activitatiList.activities[SchedActivity.ID]} orar");
+                    throw new Exception($"Activitatea din orar {activitatiList.GetActivity(sactivity.ID)} " +
+                        $"se suprapune cu {activitatiList.GetActivity(SchedActivity.ID)} orar");
             }
             //cauta la care pozitie trebuie inserata
             int pos = 0;
@@ -78,15 +62,24 @@ namespace StocareOrar
         }
 
         // elimina activitatea de la intertvalul din orar
-        public void remove_ScheduledActivity_fromSchedule(int ID_toremove, WeekDays day)
+        public void RemoveActivitiesFromDay(Guid ID_toremove, WeekDays day)
         {
             scheduled_week[day].RemoveAll(s => s.ID == ID_toremove);
         }
 
-        //adaugare din lista de activitati la intervalul dat
-        public void add_activity_fromList(int ID, TimeOnly start, TimeOnly end, WeekDays day)
+        public void RemoveAllActivities(Activitate activitytoremove)
         {
-            var activity = activitatiList.activities[ID];
+            Guid id = activitytoremove.ID;
+            foreach(var key in scheduled_week.Keys)
+            {
+                scheduled_week[key].RemoveAll(activity => activity.ID == id);
+            }
+        }
+
+        //adaugare din lista de activitati la intervalul dat
+        public void add_activity_fromList(Guid ID, TimeOnly start, TimeOnly end, WeekDays day)
+        {
+            Activitate? activity = activitatiList.GetActivity(ID);
             if (activity == null)
             {
                 throw new ArgumentException("Activitatea nu a fost gasita!");
@@ -111,7 +104,7 @@ namespace StocareOrar
         }
 
         //returneaza sirul de caractere orarului
-        public string show_orar()
+        public string getOrarStr()
         {
             string buffer = "";
             foreach (var key in scheduled_week.Keys)
@@ -119,7 +112,7 @@ namespace StocareOrar
                 buffer += "<---------- " + key.ToString() + " ---------->\n";
                 foreach (Scheduled_activity act in scheduled_week[key])
                 {
-                    buffer += act.INFO(activitatiList.activities[act.ID]) + "\n";
+                    buffer += act.INFO(activitatiList.GetActivity(act.ID)) + "\n";
                 }
             }
             return buffer;
@@ -128,27 +121,23 @@ namespace StocareOrar
         // Cuarata intervalul de timp dat in orar
         public void clearinterval(TimeOnly inceput, TimeOnly sfarsit, WeekDays day)
         {
-            var testSActivity = new Scheduled_activity(0, inceput, sfarsit);
+            var testSActivity = new Scheduled_activity(Guid.NewGuid(), inceput, sfarsit);
             scheduled_week[day].RemoveAll(a => a.IfOverlap(testSActivity));
         }
-
+        
         public string ConversiaLaString()
         {
-            string SirPentruFisier="", List_pt_fisier="", orar_pt_fifiser="";
-            foreach(Activitate act in activitatiList.activities.Values)
-            {
-                List_pt_fisier += act.ConversiePentruScriereFisier() + SEPARATOR_SECUNDAR_FISIER;
-            }
+            string orar_pt_fisier = "";
             foreach(var day in scheduled_week.Keys)
             {
-                orar_pt_fifiser += day.ToString() + SEPARATOR_TERTIAR;
                 foreach(Scheduled_activity act in scheduled_week[day])
                 {
-                    orar_pt_fifiser += act.ID + SEPARATOR_FISIER + act.start_time + SEPARATOR_FISIER + act.end_time;
+                    orar_pt_fisier  += day.ToString() + SEPARATOR_SECUNDAR_FISIER + act.ConversiePentruScriereFisier() + "\n";
                 }
             }
-            SirPentruFisier = List_pt_fisier + SEPARATOR_SECUNDAR_FISIER + orar_pt_fifiser;
-            return SirPentruFisier;
+            // orar_pt_fisier = zi;id;start;stop;
+            return orar_pt_fisier;
         }
+        
     }
 }

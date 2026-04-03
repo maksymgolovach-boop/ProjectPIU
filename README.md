@@ -3,5 +3,16 @@
 ## Versiunea de lucru local
 Planificarea saptamanei este un proiect
 
-Realizata citirea si scrierea in fisier. Urmeaza adaugarea a functiilor de stergere a activitatii de pe orar.
-
+La momentul dat au fost realizate functiile:
+1. Pentru lista de activitati:
+   + Adaugare/Stergere activiatii din lista/fisier
+   + Cautare activitati dupa nume
+   + Scrierea activitatilor in fisier text
+   + Operarea cu lista de activitati direct in fisier text
+   + Conversia din fisier in memorie
+2. Pentru orar:
+   + Adaugare activitate in orar din lista de activitati
+   + Stergerea completa a unei activitati din orar
+   + Stergerea unei activitati din ziua respectiva
+   + Operarea pe fisier cu orar
+   + Conversia din fisier in memorie

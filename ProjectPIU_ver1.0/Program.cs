@@ -48,7 +48,7 @@ namespace Program
                             break;
 
                         case "A":
-                            Console.WriteLine(show_activitylist(activities.GetActivities()));
+                            Console.WriteLine(show_activitylist(activities.GetActivitiesValues()));
                             break;
                         case "S":
                             if (activitate1 != null)
@@ -87,9 +87,7 @@ namespace Program
                         case "R":
                             nume = Console.ReadLine();
                             activitate1 = activities.FindActivitiesByName(nume).First();
-                            Console.Write("Introduceti numarul zilei[1,2,3,4,5,6,7]: ");
-                            day = Int32.Parse(Console.ReadLine());
-                            adminOrar.RemoveAllActivities(activitate1.ID, (WeekDays)day);
+                            adminOrar.RemoveAllActivities(activitate1);
                             break;
 
                         case "X":
@@ -154,6 +152,15 @@ namespace Program
             foreach (var key in activities.Keys)
             {
                 buffer += $"ID: {key} \n" + activities[key].INFO() + "\n";
+            }
+            return buffer;
+        }        
+        public static string show_activitylist(List<Activitate> activities)
+        {
+            string buffer = "";
+            foreach (var activitty in activities)
+            {
+                buffer += activitty.INFO();
             }
             return buffer;
         }

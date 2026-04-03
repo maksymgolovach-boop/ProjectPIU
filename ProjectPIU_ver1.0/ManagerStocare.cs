@@ -18,16 +18,16 @@ namespace Program
             string locatieFisierSolutie = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? "";
             string caleCompletaFisier = locatieFisierSolutie + "\\" + numeFisier;
 
-
+                        
             if (formatSalvare != null)
             {
                 switch (formatSalvare)
                 {
                     default:
-                    case "memorie":
-                        return new AdministrareActivitatiMemorie();
                     case "txt":
                         return new AdministareActivitatiText(caleCompletaFisier + "." + formatSalvare);
+                    case "memorie":
+                        return new AdministrareActivitatiMemorie();
                 }
             }
 

@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -65,7 +66,6 @@ namespace NivelStocareDate
         // Posibil sa apare un conflict daca scheduled_activity exista dar informatia totala - nu, aceasta problema se va reusi daca Scheduled_activity va primi ca argument activitatea completa
         public void add_ScheduledActivity_toSchedule(Scheduled_activity SchedActivity, WeekDays day)
         {
-            Scheduled_activity sactivity;
             using(StreamReader file = new StreamReader(numeFisier))
             {
                 string liniefisier;
@@ -76,7 +76,7 @@ namespace NivelStocareDate
                     Enum.TryParse(continut[0], out WeekDays zi);
                     if (zi != day)
                         continue;
-                    if(new Scheduled_activity(continut[SCHED_ACTIVITY_POS]).IfOverlap(SchedActivity))
+                    if (new Scheduled_activity(continut[SCHED_ACTIVITY_POS]).IfOverlap(SchedActivity))
                         throw new Exception($"Activitatile se suprapun!");
                 }
             }
@@ -137,9 +137,16 @@ namespace NivelStocareDate
         }
         public void RemoveAllActivities(Activitate activity) // functia care va sterge toate activitatile din orar care match cu activitatea de la argument
         {
-            Guid ID_toremove = activity.ID;
+            string ID_toremove = activity.ID.ToString();
             var buffer = File.ReadAllLines(numeFisier);
-            
+            var newlines = buffer.Where(linie =>
+            {
+                if(string.IsNullOrEmpty(linie)) return false;
+                string[] campuri = linie.Split(SEPARATOR_SECUNDAR_FISIER);
+                return !campuri[1].StartsWith(ID_toremove);
+            }).ToList();
+            File.WriteAllLines(numeFisier, newlines);
         }
+
     }
 }

@@ -1,2 +1,3 @@
 0bbdd901-c5fb-4197-af98-fb604db37210;Activitatea 1;O descriere;tipul
 01d9f08f-ca12-4b81-ab11-798cd1aaebc7;Activitatea 2;O alta descriere;tipul1
+00000000-0000-0000-0000-000000000000;Music production;Facem muzica cu grupul "Aljazer";muzica

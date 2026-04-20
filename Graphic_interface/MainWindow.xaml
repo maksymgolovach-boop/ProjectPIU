@@ -13,9 +13,12 @@
 
             <Label Content="Lista de activitati" Foreground="#D6DB90" 
                    HorizontalAlignment="Center" FontSize="20"/>
-
-            <Button Click="RefreshActivitiesButton" Content="Actualizează" Background="#5A17B2" Foreground="#D6DB90" 
-                    Width="100" Margin="10"/>
+            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
+                <Button Click="RefreshActivitiesButton" Content="Actualizează" Background="#5A17B2" Foreground="#D6DB90" 
+                    Width="120" Margin="10"/>
+                <Button Click="AddActivityWindow" Content="Adauga activitate" Background="#5A17B2" Foreground="#D6DB90" 
+                    Width="120" Margin="10"/>
+            </StackPanel>
 
             <ListBox x:Name="lstActivitati" Height="200" Width="400" 
                      Background="White" Margin="10"/>

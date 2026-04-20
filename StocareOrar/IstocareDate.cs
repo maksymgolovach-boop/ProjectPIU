@@ -16,7 +16,6 @@ namespace NivelStocareDate
     {
         void add_ScheduledActivity_toSchedule(Scheduled_activity SchedActivity, WeekDays day);
         void add_activity_fromList(Guid ID, TimeOnly start, TimeOnly end, WeekDays day);
-        Dictionary<Guid, Activitate> GetActivitiesList();
         Dictionary<WeekDays, List<Scheduled_activity>> GetOrar();
         string getOrarStr();
         void RemoveActivitiesFromDay(Guid ID_toremove, WeekDays day);

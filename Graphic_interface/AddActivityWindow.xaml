@@ -1,0 +1,76 @@
+﻿<Window x:Class="NivelWPF.AddActivityWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NivelWPF"
+        mc:Ignorable="d"
+        Title="Adaugare activitate" Height="400" Width="400"
+        Background="#7461D4" WindowStartupLocation="CenterOwner"
+        FontFamily="Global Sans Serif">
+    
+    <Window.Resources>
+        <Style x:Key="HoverButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="#7461D4"/>
+            <Setter Property="Foreground" Value="Black"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="1">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#5A17B2"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Foreground" Value="#A5AF60"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Border Background="White" CornerRadius="15" Padding="20">
+            <Border.Effect>
+                <DropShadowEffect BlurRadius="15" Direction="270" ShadowDepth="5" Opacity="0.3"/>
+            </Border.Effect>
+            <StackPanel>
+                <TextBlock Text="Activitate Nouă" FontSize="22" FontWeight="Bold"
+                           Foreground="#5A17B2" HorizontalAlignment="Center" Margin="0,0,0,20" />
+
+                <TextBlock Text="Nume Activitate:" Foreground="#666" Margin="0,5,0,2"/>
+                <TextBox x:Name="ActivityName" Padding="5" Margin="0,0,0,15" BorderBrush="#B1A6E8"/>
+
+                <TextBlock Text="Descierea Activitati:" Foreground="#666" Margin="0,5,0,2"/>
+                <TextBox x:Name="ActivityDescription" Padding="5" Margin="0,0,0,15" BorderBrush="#B1A6E8"/>
+
+                <TextBlock Text="Tipul Activitati:" Foreground="#666" Margin="0,5,0,2"/>
+                <TextBox x:Name="ActivityType" Padding="5" Margin="0,0,0,15" BorderBrush="#B1A6E8" />
+
+                <Grid Margin="0,10,0,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <Button Content="Anulează" Grid.Column="0" Height="30" Style="{StaticResource HoverButtonStyle}"
+                             Click="Cancel_click"/>
+
+                    <Button Content="Salvează" Grid.Column="1" Height="30" Style="{StaticResource HoverButtonStyle}"
+                             Click="Add_click" />
+                </Grid>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Window>

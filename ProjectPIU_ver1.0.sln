@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LibrarieModele", "Activitat
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NivelStocareDate", "StocareOrar\NivelStocareDate.csproj", "{F9C99B18-D30E-488C-8D4D-E57F1D20F6A5}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphic_interface", "Graphic_interface\Graphic_interface.csproj", "{D2A86705-4446-496F-8911-3E2E1AA95482}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "NivelWPF", "Graphic_interface\NivelWPF.csproj", "{D2A86705-4446-496F-8911-3E2E1AA95482}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

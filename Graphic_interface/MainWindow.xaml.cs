@@ -9,10 +9,10 @@ using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using NivelStocareDate;
-using LibrarieModele;
-using Program;
 using System.Windows.Media.Media3D;
+using NivelStocareDate;
+using NivelWPF;
+using LibrarieModele;
 
 namespace Graphic_interface
 {
@@ -43,6 +43,18 @@ namespace Graphic_interface
                 displayList.Add(activity.INFO());
             }
             lstActivitati.ItemsSource = displayList;
+        }
+
+        private void AddActivityWindow(object sender, RoutedEventArgs e)
+        {
+            AddActivityWindow dialog = new AddActivityWindow();
+
+            if(dialog.ShowDialog() == true)
+            {
+                Activitate act = dialog.newAcitivity;
+                activities.add_activityToList(act);
+                afiseazaActivitati();
+            }
         }
     }
 

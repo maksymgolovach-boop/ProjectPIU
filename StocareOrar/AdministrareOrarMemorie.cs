@@ -29,11 +29,6 @@ namespace NivelStocareDate
             activitatiList = new AdministrareActivitatiMemorie(old_activities);
             scheduled_week = new Dictionary<WeekDays, List<Scheduled_activity>>();
         }
-        public Dictionary<Guid, Activitate> GetActivitiesList()
-        {
-            return activitatiList.GetActivities();
-        }
-
         public Dictionary<WeekDays, List<Scheduled_activity>> GetOrar()
         {
             return scheduled_week;

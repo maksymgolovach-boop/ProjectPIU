@@ -4,7 +4,48 @@
              xmlns:local="clr-namespace:Graphic_interface"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <Style x:Key="CircularPlusButtonStyle" TargetType="Button">
+            <Setter Property="Background" Value="#6050AB"/>
+            <Setter Property="Foreground" Value="#BBABFF"/>
+            <Setter Property="Width" Value="20"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="Padding" Value="5"/>
+            <Setter Property="BorderThickness" Value="0"/>
+
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="RootGrid" Background="Transparent">
+                            <Border x:Name="BackgroundBorder" 
+                            Background="{TemplateBinding Background}" 
+                            CornerRadius="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=ActualWidth}">
+                                <Border.Effect>
+                                    <DropShadowEffect BlurRadius="5" 
+                                              ShadowDepth="1.5" 
+                                              Direction="270" 
+                                              Opacity="0.4" 
+                                              Color="Black"/>
+                                </Border.Effect>
+
+                                <Path Data="M 0,5 H 10 M 5,0 V 10" 
+                              Stroke="{TemplateBinding Foreground}" 
+                              StrokeThickness="2" 
+                              Stretch="Uniform" 
+                              HorizontalAlignment="Center" 
+                              VerticalAlignment="Center"
+                              Margin="{TemplateBinding Padding}"/>
+                            </Border>
+                        </Grid>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <!-- Small SCROLLBAR -->
+        <Style x:Key="{x:Type ScrollBar}" TargetType="{x:Type ScrollBar}">
+            <Setter Property="MinWidth" Value="5"/>
+            <Setter Property="Width" Value="5" />
+        </Style>
     </Application.Resources>
     
 </Application>

@@ -8,22 +8,81 @@
         Title="Orarul personal" Height="450" Width="900" Background="#7461D4"
         WindowStyle="SingleBorderWindow">
 
+ 
+
     <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        
+        <!-- PANELUL LISTEI DE ACTIVITATI -->
+        <StackPanel Grid.Column="0"
+                    Background="#412DA4">
+            <Label Content="Activitati" Foreground="White"
+                   HorizontalAlignment="Center"
+                   FontFamily="Bahnschrift Light"
+                   Margin="0 5"
+                   FontSize="20"/>
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center" 
+                            HorizontalAlignment="Center"
+                            Margin="5"
+                            Grid.Row="0">
+                    <TextBox x:Name="SearchActivity"
+                             Width="150"
+                             KeyDown="SearchBox_KeyDown"/>
+                    <Button Style="{StaticResource CircularPlusButtonStyle}" Margin="5 0 0 0" Click="AddActivityWindow"/>
+                </StackPanel>
+                
+                <!-- LISTA DE ACTIVITATI -->
+                <WrapPanel Grid.Row="1" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Center" MaxHeight="300" MinHeight="250">
+                    <ListView x:Name="ActivityListView" Margin="20"
+                              VirtualizingPanel.ScrollUnit="Pixel">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="#7461D4" CornerRadius="12" Margin="0,10,0,10" Padding="15" Width="150"> 
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
 
-            <Label Content="Lista de activitati" Foreground="#D6DB90" 
-                   HorizontalAlignment="Center" FontSize="20"/>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                <Button Click="RefreshActivitiesButton" Content="Actualizează" Background="#5A17B2" Foreground="#D6DB90" 
-                    Width="120" Margin="10"/>
-                <Button Click="AddActivityWindow" Content="Adauga activitate" Background="#5A17B2" Foreground="#D6DB90" 
-                    Width="120" Margin="10"/>
-            </StackPanel>
+                                        <TextBlock Grid.Row="0"
+                                                   Foreground="#FFFA9E"
+                                                   FontFamily="Bahnschrift Light"
+                                                   Text="{Binding name}" 
+                                                   FontSize="14" 
+                                                   FontWeight="SemiBold" 
+                                                   Margin="0,0,0,5" />
 
-            <ListBox x:Name="lstActivitati" Height="200" Width="400" 
-                     Background="White" Margin="10"/>
-            <Label x:Name="act1"></Label>
-            
+                                        <Rectangle Grid.Row="1" Fill="#40329C" Height="1" Margin="0,0,0,10"/>
+
+                                        <TextBlock Grid.Row="2"
+                                                   Foreground="#FFFA9E"
+                                                   FontFamily="Bahnschrift Light"
+                                                   Text="{Binding description}"
+                                                   FontSize="11"
+                                                   TextWrapping="Wrap" />   
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </WrapPanel>
+            </Grid>
         </StackPanel>
+
+        <!-- REGIUNEA CALENDAR O SA SE DEZVOLTE IN CURAND -->
+        <StackPanel Grid.Column="1">
+            
+        </StackPanel>            
+ 
+         
     </Grid>
 </Window>

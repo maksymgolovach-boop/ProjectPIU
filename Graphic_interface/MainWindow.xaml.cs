@@ -13,6 +13,8 @@ using System.Windows.Media.Media3D;
 using NivelStocareDate;
 using NivelWPF;
 using LibrarieModele;
+using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace Graphic_interface
 {
@@ -22,27 +24,15 @@ namespace Graphic_interface
     public partial class MainWindow : Window
     {
         private IstocareDateActivities activities;
+        public ObservableCollection<Activitate> UIActivities { get; set; } = new ObservableCollection<Activitate>();
         public MainWindow()
         {
             InitializeComponent();
             activities = ManagerStocare.GetAdministratorStocareActivitati();
-            
-        }
-        
-        private void RefreshActivitiesButton(object sender, RoutedEventArgs e)
-        {
-            afiseazaActivitati();
-            MessageBox.Show("Lista a fost actualizata!");
-        }
-        public void afiseazaActivitati()
-        {
-            var displayList = new List<string>();
-            var _activities = activities.GetActivitiesValues();
-            foreach (var activity in _activities)
-            {
-                displayList.Add(activity.INFO());
-            }
-            lstActivitati.ItemsSource = displayList;
+            var initialData = activities.GetActivitiesValues();
+            foreach (var act in initialData) UIActivities.Add(act);
+
+            ActivityListView.ItemsSource = UIActivities;
         }
 
         private void AddActivityWindow(object sender, RoutedEventArgs e)
@@ -53,7 +43,41 @@ namespace Graphic_interface
             {
                 Activitate act = dialog.newAcitivity;
                 activities.add_activityToList(act);
-                afiseazaActivitati();
+                RefreshActivities();
+            }
+        }
+        private void RefreshActivities()
+        { 
+            var allActivities = activities.GetActivitiesValues();
+
+            UIActivities.Clear();
+            foreach (var act in allActivities)
+            {
+                UIActivities.Add(act);
+            }
+        }
+        private void SearchBox_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.Enter)
+            {
+                performSearch();
+            }
+        }
+
+        private void performSearch()
+        {
+            string ActivityName = SearchActivity.Text.Trim();
+            if (ActivityName.Length == 0)
+            {
+                RefreshActivities();
+                return;
+            }
+            var allActivities = activities.FindActivitiesByName(ActivityName);
+            UIActivities.Clear();
+            if (allActivities == null) return;
+                foreach (var act in allActivities)
+            {
+                UIActivities.Add(act);
             }
         }
     }

@@ -24,6 +24,7 @@ namespace LibrarieModele
             name = null;
             description = null;
             type = null;
+            ID = Guid.NewGuid();
         }
         public Activitate(string _name, string _description, string _tip) // Constructorul ai clasei
         {

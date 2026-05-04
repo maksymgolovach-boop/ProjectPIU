@@ -1,4 +1,4 @@
-﻿namespace Zile.Core
+﻿namespace LibrarieModele.enums
 {
     public enum WeekDays
     {

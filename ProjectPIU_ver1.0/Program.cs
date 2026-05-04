@@ -4,8 +4,8 @@ using System.Security.Cryptography.X509Certificates;
 using System.Xml.Linq;
 
 using LibrarieModele;
+using LibrarieModele.enums;
 using NivelStocareDate;
-using Zile.Core;
 
 namespace Program
 {
@@ -119,7 +119,9 @@ namespace Program
             descriere = Console.ReadLine();
             Console.WriteLine("Introduceti tipul activitatii: ");
             tip = Console.ReadLine();
-            return new Activitate(nume, descriere, tip);
+            Enum.TryParse(tip, out ActivityType type);
+
+            return new Activitate(nume, descriere, type);
         }
 
         // citire activitate cu interval de la tastatura
@@ -134,8 +136,8 @@ namespace Program
             descriere = Console.ReadLine();
             Console.WriteLine("Introduceti tipul activitatii: ");
             tip = Console.ReadLine();
-
-            Activitate new_activitate = new Activitate(nume, descriere, tip);
+            Enum.TryParse(tip, out ActivityType type);
+            Activitate new_activitate = new Activitate(nume, descriere, type);
             orar.Add(new_activitate.ID, new_activitate);
 
             Console.WriteLine("Introduceti timpul de inceput a activitatii: ");

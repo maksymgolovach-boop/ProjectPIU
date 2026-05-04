@@ -1,5 +1,5 @@
 ﻿using LibrarieModele;
-using WeekDays = Zile.Core.WeekDays;
+using WeekDays = LibrarieModele.enums.WeekDays;
 
 namespace NivelStocareDate
 {

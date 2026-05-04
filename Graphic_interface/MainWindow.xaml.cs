@@ -15,6 +15,7 @@ using NivelWPF;
 using LibrarieModele;
 using System.ComponentModel;
 using System.Collections.ObjectModel;
+using LibrarieModele.enums;
 
 namespace Graphic_interface
 {
@@ -25,12 +26,32 @@ namespace Graphic_interface
     {
         private IstocareDateActivities activities;
         public ObservableCollection<Activitate> UIActivities { get; set; } = new ObservableCollection<Activitate>();
+        public ObservableCollection<LegendItem> LegendItems { get; set; }
+        public class LegendItem
+        {
+            public ActivityType Type { get; set; }
+            public string DisplayName { get; set; }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
             activities = ManagerStocare.GetAdministratorStocareActivitati();
             var initialData = activities.GetActivitiesValues();
             foreach (var act in initialData) UIActivities.Add(act);
+            LegendItems = new ObservableCollection<LegendItem>
+            {
+                new LegendItem { Type = ActivityType.SelfImprovement, DisplayName = "Dezvoltare personală" },
+                new LegendItem { Type = ActivityType.Learning, DisplayName = "Învățare" },
+                new LegendItem { Type = ActivityType.Project, DisplayName = "Proiect" },
+                new LegendItem { Type = ActivityType.Work, DisplayName = "Muncă" },
+                new LegendItem { Type = ActivityType.Sport, DisplayName = "Sport" },
+                new LegendItem { Type = ActivityType.Education, DisplayName = "Educație" },
+                new LegendItem { Type = ActivityType.Resting, DisplayName = "Odihnă" },
+                new LegendItem { Type = ActivityType.Entertainment, DisplayName = "Divertisment" },
+                new LegendItem { Type = ActivityType.None, DisplayName = "Niciuna" },
+            };
+            TypesLegend.ItemsSource = LegendItems;
 
             ActivityListView.ItemsSource = UIActivities;
         }
@@ -60,26 +81,8 @@ namespace Graphic_interface
         {
             if (e.Key == Key.Enter)
             {
-                performSearch();
-            }
-        }
-
-        private void performSearch()
-        {
-            string ActivityName = SearchActivity.Text.Trim();
-            if (ActivityName.Length == 0)
-            {
-                RefreshActivities();
-                return;
-            }
-            var allActivities = activities.FindActivitiesByName(ActivityName);
-            UIActivities.Clear();
-            if (allActivities == null) return;
-                foreach (var act in allActivities)
-            {
-                UIActivities.Add(act);
+                //performSearch();
             }
         }
     }
-
 }

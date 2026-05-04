@@ -1,7 +1,6 @@
 # ProjectPIU_ver1.0
 ## Proiect PIU **Orar Personal** 
 ## Versiunea de lucru local
-Planificarea saptamanei este un proiect
 
 La momentul dat au fost realizate functiile:
 1. Pentru lista de activitati:

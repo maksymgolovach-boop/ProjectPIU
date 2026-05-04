@@ -1,2 +1,3 @@
-0bbdd901-c5fb-4197-af98-fb604db37210;Activitatea 1;O descriere;tipul
-01d9f08f-ca12-4b81-ab11-798cd1aaebc7;Activitatea 2;O alta descriere;tipul1
+ce605555-9231-42ab-8a91-2185002ce546;Loh Tvetochnyi;desc;SelfImprovement
+0d09dd87-ee49-43a9-bf81-4341b4506fe9;Numee;Descriere;Sport
+0e4c6f5c-e03b-4ef8-a42f-c52b0b6f1fac;nume1;;Project

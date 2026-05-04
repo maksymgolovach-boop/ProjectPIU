@@ -1,4 +1,5 @@
 ﻿using LibrarieModele;
+using LibrarieModele.enums;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -6,7 +7,6 @@ using System.Globalization;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Zile.Core;
 
 namespace NivelStocareDate
 {
@@ -53,15 +53,7 @@ namespace NivelStocareDate
             }
             return orar;
         }
-        public Dictionary<Guid, Activitate> GetActivitiesList()
-        {
-            return activitati.GetActivities();
-        }
-
-        public Activitate? ActivityByID(Guid id)
-        {
-            return activitati.GetActivity(id);
-        }
+        
         //adaugare activitate in orar
         // Posibil sa apare un conflict daca scheduled_activity exista dar informatia totala - nu, aceasta problema se va reusi daca Scheduled_activity va primi ca argument activitatea completa
         public void add_ScheduledActivity_toSchedule(Scheduled_activity SchedActivity, WeekDays day)

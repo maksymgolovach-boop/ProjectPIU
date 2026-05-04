@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.Design.Serialization;
+using LibrarieModele.enums;
 
 namespace LibrarieModele
 {
@@ -15,17 +16,20 @@ namespace LibrarieModele
         //instantele clasei
         public string name { get; set; }
         public string description { get; set; }
-        public string type { get; set; }
+        public ActivityType type { get; set; }
         public Guid ID { get; set; }
 
-        //definirea metodelor
+        // afisare
+        public string TipulStr => type.ToRomanianString();
+        // definirea metodelor
         public Activitate() // Constructorul implicit ai clasei
         {
-            name = null;
-            description = null;
-            type = null;
+            name = String.Empty;
+            description = String.Empty;
+            type = ActivityType.None;
+            ID = Guid.NewGuid();
         }
-        public Activitate(string _name, string _description, string _tip) // Constructorul ai clasei
+        public Activitate(string _name, string _description, ActivityType _tip) // Constructorul ai clasei
         {
             name = _name;
             description = _description;
@@ -36,7 +40,7 @@ namespace LibrarieModele
         {
             return $"Denumirea: {name}\n" +
                 $"Descrierea: {description}\n" +
-                $"Tip: {type}\n";
+                $"Tip: {type.ToString()}\n";
         }
 
         public Activitate(string strFisier) //citire activitate din fisier
@@ -45,7 +49,8 @@ namespace LibrarieModele
             this.ID = Guid.Parse(FisierActivitate[ID_pos]);
             this.name = FisierActivitate[NUME_pos];
             this.description = FisierActivitate[DESCRIPTION_pos];
-            this.type = FisierActivitate[TYPE_pos];
+            Enum.TryParse(FisierActivitate[TYPE_pos], out ActivityType type);
+            this.type = type;
         }
         
         public string ConversiePentruScriereFisier()
@@ -55,7 +60,7 @@ namespace LibrarieModele
                 this.ID.ToString(),
                 this.name ?? ("NEDEFINIT"),
                 this.description ?? ("NU ESTE NICI O DESCRIERE"),
-                this.type ?? ("NU A FOST DEFINIT")
+                this.type.ToString()
                 );
             return ObjActivitateFisier;
         }

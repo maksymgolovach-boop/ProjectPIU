@@ -25,6 +25,7 @@ namespace Graphic_interface
     public partial class MainWindow : Window
     {
         private IstocareDateActivities activities;
+        private IstocareDateOrar orar;
         public ObservableCollection<Activitate> UIActivities { get; set; } = new ObservableCollection<Activitate>();
         public ObservableCollection<LegendItem> LegendItems { get; set; }
         public class LegendItem
@@ -36,7 +37,9 @@ namespace Graphic_interface
         public MainWindow()
         {
             InitializeComponent();
+            this.DataContext = this;
             activities = ManagerStocare.GetAdministratorStocareActivitati();
+            orar = ManagerStocare.GetAdministratorStocareOrar(activities);
             var initialData = activities.GetActivitiesValues();
             foreach (var act in initialData) UIActivities.Add(act);
             LegendItems = new ObservableCollection<LegendItem>
@@ -60,7 +63,7 @@ namespace Graphic_interface
         {
             AddActivityWindow dialog = new AddActivityWindow();
 
-            if(dialog.ShowDialog() == true)
+            if (dialog.ShowDialog() == true)
             {
                 Activitate act = dialog.newAcitivity;
                 activities.add_activityToList(act);
@@ -68,7 +71,7 @@ namespace Graphic_interface
             }
         }
         private void RefreshActivities()
-        { 
+        {
             var allActivities = activities.GetActivitiesValues();
 
             UIActivities.Clear();
@@ -82,6 +85,33 @@ namespace Graphic_interface
             if (e.Key == Key.Enter)
             {
                 //performSearch();
+            }
+        }
+        public IEnumerable<ActivityViewItem> DisplayItems
+        {
+            get
+            {
+                var list = new List<ActivityViewItem>();
+                foreach (var dayEntry in orar.GetOrar())
+                {
+                    foreach (var sched in dayEntry.Value)
+                    {
+                        // Find the metadata using the ID link
+                        var meta = activities.GetActivities();
+
+                        if (meta[sched.ID] != null)
+                        {
+                            list.Add(new ActivityViewItem
+                            {
+                                Sched = sched,
+                                Name = meta[sched.ID].name,
+                                type = meta[sched.ID].type,
+                                DayColumn = (int)dayEntry.Key + 1 // Offset by 1 for time column
+                            });
+                        }
+                    }
+                }
+                return list;
             }
         }
     }

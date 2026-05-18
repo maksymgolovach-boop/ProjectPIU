@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Graphic_interface"
         mc:Ignorable="d"
-        Title="Orarul personal" Height="550" Width="800" Background="white"
+        Title="Orarul personal" Height="560" Width="1200" Background="white"
         WindowStyle="SingleBorderWindow">
 
  
@@ -26,7 +26,7 @@
                     <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
-            <Label Content="ACTIVITATI" Foreground="#7a7872"
+            <Label Content="Activitati" Foreground="#7a7872"
                    HorizontalAlignment="left"
                    FontFamily="Bahnschrift Light"
                    Margin="5 5 0 5"
@@ -105,14 +105,196 @@
         
         
         <Rectangle Width="1" Fill="#dedddd" HorizontalAlignment="Right"/>
-        <!-- REGIUNEA CALENDAR O SA SE DEZVOLTE IN CURAND -->
-        <StackPanel Grid.Column="1">
-            
-        </StackPanel>
+        
+        <!-- REGIUNEA CALENDAR -->
+        <Grid Grid.Column="1">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="30"/>
+                <RowDefinition Height="*"/>
+            </Grid.RowDefinitions>
 
+            <!-- Zile -->
+            <Grid Grid.Row="0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <TextBlock Grid.Column="0" Text="" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Grid.Column="1" Text="Luni" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Grid.Column="2" Text="Marti" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Grid.Column="3" Text="Miercuri" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Grid.Column="4" Text="Joi" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Grid.Column="5" Text="Vineri" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+                <TextBlock Grid.Column="6" Text="Sambata" VerticalAlignment="Center" HorizontalAlignment="Center" FontWeight="Bold"/>
+            </Grid>
+
+            
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Ore -->
+                <Grid Grid.Column="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                        <RowDefinition Height="50"/>
+                    </Grid.RowDefinitions>
+
+                    <TextBlock Grid.Row="0" Text="08:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="1" Text="09:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="2" Text="10:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="3" Text="11:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="4" Text="12:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="5" Text="13:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="6" Text="14:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="7" Text="15:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="8" Text="16:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="9" Text="17:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="10" Text="18:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="11" Text="19:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="12" Text="20:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="13" Text="21:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                    <TextBlock Grid.Row="14" Text="22:00" VerticalAlignment="Center" HorizontalAlignment="Center" FontSize="12"/>
+                </Grid>
+                <Grid Grid.Column="1">
+                    <Grid IsHitTestVisible="False">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                            <RowDefinition Height="50"/>
+                        </Grid.RowDefinitions>
+
+                        <Border Grid.Row="0" Grid.RowSpan="16" Grid.Column="0" BorderBrush="#D3D3D3" BorderThickness="0,0,1,0"/>
+                        <Border Grid.Row="0" Grid.RowSpan="16" Grid.Column="1" BorderBrush="#D3D3D3" BorderThickness="0,0,1,0"/>
+                        <Border Grid.Row="0" Grid.RowSpan="16" Grid.Column="2" BorderBrush="#D3D3D3" BorderThickness="0,0,1,0"/>
+                        <Border Grid.Row="0" Grid.RowSpan="16" Grid.Column="3" BorderBrush="#D3D3D3" BorderThickness="0,0,1,0"/>
+                        <Border Grid.Row="0" Grid.RowSpan="16" Grid.Column="4" BorderBrush="#D3D3D3" BorderThickness="0,0,1,0"/>
+                        <Border Grid.Row="0" Grid.RowSpan="16" Grid.Column="5" BorderBrush="#D3D3D3" BorderThickness="0,0,1,0"/>
+
+                        <Border Grid.Row="0" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="1" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="2" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="3" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="4" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="5" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="6" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="7" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="8" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="9" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="10" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="11" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="12" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="13" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                        <Border Grid.Row="14" Grid.ColumnSpan="7" BorderBrush="#D3D3D3" BorderThickness="0,0,0,1"/>
+                    </Grid>
+
+                </Grid>
+                <!-- CALENDAR -->
+                <ItemsControl Grid.Column="1" ItemsSource="{Binding DisplayItems}" Panel.ZIndex="1">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                    <RowDefinition Height="50"/>
+                                </Grid.RowDefinitions>
+                            </Grid>
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+
+                    <ItemsControl.ItemContainerStyle>
+                        <Style TargetType="ContentPresenter">
+                            <Setter Property="Grid.Column" Value="{Binding DayColumn}"/>
+                            <Setter Property="Grid.Row" Value="{Binding StartRow}"/>
+                            <Setter Property="Grid.RowSpan" Value="{Binding RowSpan}"/>
+                        </Style>
+                    </ItemsControl.ItemContainerStyle>
+
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border Background="{Binding type, Converter={StaticResource TypeToColor}}" BorderBrush="#dedddd" 
+                            BorderThickness="1" Margin="1" CornerRadius="2" Padding="5">
+                                <StackPanel>
+                                    <TextBlock Text="{Binding Name}" FontWeight="Bold" TextWrapping="Wrap" Foreground="White"/>
+                                    <TextBlock FontSize="10" Foreground="White">
+                                        <Run Text="{Binding Sched.start_time, StringFormat='{}{0:HH:mm}'}"/>
+                                        <Run Text="-"/>
+                                        <Run Text="{Binding Sched.end_time, StringFormat='{}{0:HH:mm}'}"/>
+                                    </TextBlock>
+                                </StackPanel>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </Grid>
+        </Grid>
+
+        <!-- DEADLINES -->
         <StackPanel Grid.Column="2"
                     Background="#f5f4ed">
-            <Label Content="Deadlines" Foreground="#7a7872"
+            <Label Content="Deadline-uri" Foreground="#7a7872"
                    HorizontalAlignment="left"
                    FontFamily="Bahnschrift Light"
                    Margin="0 5"

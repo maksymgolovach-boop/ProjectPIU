@@ -1,3 +1,5 @@
-0d09dd87-ee49-43a9-bf81-4341b4506fe9;Numee;Descriere;Sport
-0e4c6f5c-e03b-4ef8-a42f-c52b0b6f1fac;nume1;;Project
-52b10e0b-e874-4897-8b7c-0ec70c4fbe3e;Curs;;Education
+dd138b57-56cb-46ba-8d3c-1ffefc0b5673;Proiect PIU;proiect orar personal;Project
+e0c053da-7dfc-4387-946c-3ce04d391135;Asculta Germana;Invat germana;Learning
+e47819cb-3ab1-4ee4-9536-750184b48a68;Munte;Mergem la munte cu colegii;Resting
+8ec2d67a-30a7-47c6-8271-9aa5dff0535a;Practica chitara;;SelfImprovement
+bf53b51f-4053-4dac-9bdc-f93a84ad8151;Curs RC;curs retele calculatoare;Education

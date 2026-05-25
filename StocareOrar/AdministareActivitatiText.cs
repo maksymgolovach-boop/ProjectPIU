@@ -1,4 +1,5 @@
 ﻿using LibrarieModele;
+using LibrarieModele.enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -22,11 +23,11 @@ namespace NivelStocareDate
         {
             Dictionary<Guid, Activitate> activities = new Dictionary<Guid, Activitate>();
 
-            using(StreamReader stream = new StreamReader(numeFisierActivitati))
+            using (StreamReader stream = new StreamReader(numeFisierActivitati))
             {
                 string linieFisier;
 
-                while((linieFisier = stream.ReadLine()) != null) 
+                while ((linieFisier = stream.ReadLine()) != null)
                 {
                     Activitate act = new Activitate(linieFisier);
                     activities.Add(act.ID, act);
@@ -59,7 +60,7 @@ namespace NivelStocareDate
 
                 while ((linieFisier = stream.ReadLine()) != null)
                 {
-                    if(new Activitate(linieFisier).ID == id)
+                    if (new Activitate(linieFisier).ID == id)
                     {
                         return new Activitate(linieFisier);
                     }
@@ -70,7 +71,7 @@ namespace NivelStocareDate
 
         public void add_activityToList(Activitate activitate) // adaugare activitate in lista activities
         {
-            using(StreamWriter stream = new StreamWriter(numeFisierActivitati, true))
+            using (StreamWriter stream = new StreamWriter(numeFisierActivitati, true))
             {
                 stream.WriteLine(activitate.ConversiePentruScriereFisier());
             }
@@ -89,21 +90,30 @@ namespace NivelStocareDate
         public List<Activitate>? FindActivitiesByName(string NumeActivitate)
         {
             string liniefisier;
-            List<Activitate> activitatiGasite = new List<Activitate>(); 
+            List<Activitate> activitatiGasite = new List<Activitate>();
 
-            using(StreamReader stream = new StreamReader(numeFisierActivitati))
+            using (StreamReader stream = new StreamReader(numeFisierActivitati))
             {
-                while((liniefisier = stream.ReadLine()) != null)
+                while ((liniefisier = stream.ReadLine()) != null)
                 {
                     var act = new Activitate(liniefisier);
                     if (act.name == NumeActivitate)
                         activitatiGasite.Add(act);
                 }
             }
-            if(activitatiGasite.Count() > 0)
+            if (activitatiGasite.Count() > 0)
                 return activitatiGasite;
             return null;
         }
 
+        public void modifyActivity(Activitate modifiedActivity)
+        {
+            if (numeFisierActivitati == null)
+                throw new ArgumentNullException("Fisierul nu a fost gasit sau nu exista!!!");
+            string IDtoModify = modifiedActivity.ID.ToString();
+            var filelines = File.ReadAllLines(numeFisierActivitati);
+            var newfilelines = filelines.Select(activity => activity.StartsWith(IDtoModify) ? modifiedActivity.ConversiePentruScriereFisier() : activity);
+            File.WriteAllLines(numeFisierActivitati, newfilelines);
+        }
     }
 }

@@ -1,11 +1,11 @@
-﻿<Window x:Class="NivelWPF.AddActivityWindow"
+﻿<Window x:Class="NivelWPF.ModifyAct"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NivelWPF"
         mc:Ignorable="d"
-        Title="Adaugare activitate"
+        Title="Modificare activitate"
         Height="450" Width="440"
         MinHeight="380" MinWidth="360"
         Background="#F1EFE8"
@@ -13,7 +13,6 @@
         FontFamily="Segoe UI">
 
     <Window.Resources>
-        <local:ActivityTypeToRomanianConverter x:Key="TypeToRomanianConverter"/>
 
         <Style x:Key="FormLabelStyle" TargetType="TextBlock">
             <Setter Property="FontFamily" Value="Segoe UI"/>
@@ -126,9 +125,9 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
     </Window.Resources>
 
-    <!-- Root grid fills the whole window -->
     <Grid Background="#F1EFE8">
         <Border Background="White"
                 CornerRadius="16"
@@ -141,7 +140,6 @@
                                   Color="#000000"/>
             </Border.Effect>
 
-            <!-- Three rows: title bar | form body (stretches) | footer -->
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto"/>
@@ -156,7 +154,7 @@
                         Background="#F8F7F3"
                         CornerRadius="16,16,0,0"
                         Padding="20,14">
-                    <TextBlock Text="Activitate Nouă"
+                    <TextBlock Text="Modifică activitatea"
                                FontSize="16"
                                FontWeight="SemiBold"
                                Foreground="#2C2C2A"/>
@@ -168,7 +166,6 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
-                        <!-- Description box takes all leftover vertical space -->
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
@@ -186,7 +183,6 @@
                                Text="Descrierea activității"
                                Style="{StaticResource FormLabelStyle}"/>
 
-                    <!-- Stretches vertically to fill available space -->
                     <TextBox Grid.Row="3"
                              x:Name="ActivityDescription"
                              TextWrapping="Wrap"
@@ -204,7 +200,7 @@
                               IsEditable="True"
                               IsTextSearchEnabled="True"
                               DisplayMemberPath="DisplayName"
-                              SelectedValuePath="Value"/>
+                              SelectedValuePath="Type"/>
                 </Grid>
 
                 <!-- Footer -->
@@ -220,9 +216,9 @@
                                 Style="{StaticResource CancelButton}"
                                 Margin="0,0,10,0"
                                 Click="Cancel_click"/>
-                        <Button Content="Salvează activitatea"
+                        <Button Content="Salvează modificările"
                                 Style="{StaticResource SaveButton}"
-                                Click="Add_click"/>
+                                Click="Modify_Click"/>
                     </StackPanel>
                 </Border>
 

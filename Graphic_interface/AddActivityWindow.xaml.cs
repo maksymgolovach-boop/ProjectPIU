@@ -21,54 +21,38 @@ namespace NivelWPF
     public partial class AddActivityWindow : Window
     {
         public Activitate newAcitivity {  get; set; }
-        public ObservableCollection<LegendItem> LegendItems { get; set; }
-        public class LegendItem
+        
+        public class ActivityTypeViewModel
         {
-            public ActivityType Type { get; set; }
-            public string DisplayName { get; set; }
+            public ActivityType Value { get; set; }
+            public string DisplayName => Value.ToRomanianString();
         }
 
         public AddActivityWindow()
         {
-
-            LegendItems = new ObservableCollection<LegendItem>
-            {
-                new LegendItem { Type = ActivityType.SelfImprovement, DisplayName = "Dezvoltare personală" },
-                new LegendItem { Type = ActivityType.Learning, DisplayName = "Învățare" },
-                new LegendItem { Type = ActivityType.Project, DisplayName = "Proiect" },
-                new LegendItem { Type = ActivityType.Work, DisplayName = "Muncă" },
-                new LegendItem { Type = ActivityType.Sport, DisplayName = "Sport" },
-                new LegendItem { Type = ActivityType.Education, DisplayName = "Educație" },
-                new LegendItem { Type = ActivityType.Resting, DisplayName = "Odihnă" },
-                new LegendItem { Type = ActivityType.Entertainment, DisplayName = "Divertisment" },
-                new LegendItem { Type = ActivityType.None, DisplayName = "Niciuna" },
-            };
-
+            
             InitializeComponent();
             SetSources();
         }
 
         private void Add_click(object sender, RoutedEventArgs e)
         {
-            int i = 0;
-            if(ActivityName.Text.Length == 0)
+            if (ActivityName.Text.Length == 0)
             {
-                BrushIfEmpty(ActivityName);
-                i++;
+                ActivityName.BorderBrush = Brushes.Red;
+                return;
             }
-            if( i!=0 )
+            if (cmbTipulActivitatii.SelectedItem == null)
             {
-                MessageBox.Show("Introduceti numele activitatii!");
+                cmbTipulActivitatii.BorderBrush = Brushes.Red;
                 return;
             }
 
-            ActivityType tip = (ActivityType)cmbTipulActivitatii.SelectedValue;
-
             newAcitivity = new Activitate
             {
-                name = ActivityName.Text,
-                description = ActivityDescription.Text ?? ("--//--"),
-                type = tip
+                name = ActivityName.Text.Trim(),
+                description = ActivityDescription.Text.Trim() ?? ("--//--"),
+                type = (cmbTipulActivitatii.SelectedValue as ActivityType?) ?? ActivityType.None
             };
             this.DialogResult = true;
         }
@@ -76,17 +60,14 @@ namespace NivelWPF
         private void SetSources()
         {
             cmbTipulActivitatii.ItemsSource = null;
-            cmbTipulActivitatii.ItemsSource = LegendItems;
+            cmbTipulActivitatii.ItemsSource = Enum.GetValues(typeof(ActivityType))
+                            .Cast<ActivityType>()
+                            .Select(t => new ActivityTypeViewModel { Value = t });
         }
 
         private void Cancel_click(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
-        }
-
-        private void BrushIfEmpty(System.Windows.Controls.TextBox lbl)
-        {
-            lbl.BorderBrush = Brushes.Red;
         }
     }
 }

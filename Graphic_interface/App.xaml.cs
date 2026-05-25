@@ -26,7 +26,7 @@ public static class ActivityTypeColors
         { ActivityType.Work,            Color.FromArgb(255, 0x7F, 0x77, 0xDD) },
         { ActivityType.Sport,           Color.FromArgb(255, 74, 207, 107) },
         { ActivityType.Education,       Color.FromArgb(255, 84, 214, 199) },
-        { ActivityType.Resting,         Color.FromArgb(255, 255, 244, 163) },
+        { ActivityType.Resting,         Color.FromArgb(255, 245, 203, 105) },
         { ActivityType.Entertainment,   Color.FromArgb(255, 203, 89, 235) },
         { ActivityType.Project,         Color.FromArgb(255, 224, 70, 70) },
         { ActivityType.None,            Color.FromArgb(255, 130, 130, 130) },

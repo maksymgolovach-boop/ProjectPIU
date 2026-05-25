@@ -43,7 +43,8 @@
             </Setter>
         </Style>
         <local:DateToColorConverter x:Key="DateToColor"/>
-        <local:DateToLightColorConverter x:Key="DateToLightColor"/> 
+        <local:DateToLightColorConverter x:Key="DateToLightColor"/>
+        <local:ActivityTypeToRomanianConverter x:Key="TypeToRomanian"/>
     </Window.Resources>
 
     <Grid>
@@ -63,7 +64,7 @@
                 </Grid.RowDefinitions>
 
             <StackPanel Grid.Row="0" Height="Auto">
-                <Label Content="Activitati" Foreground="#7a7872"
+                <Label Content="ACTIVITATI" Foreground="#7a7872"
                    HorizontalAlignment="left"
                    FontFamily="Bahnschrift Light"
                    Margin="5 5 0 5"
@@ -94,11 +95,15 @@
 
 
             <!-- LISTA DE ACTIVITATI -->
-                <WrapPanel Grid.Row="1" VerticalAlignment="Center" HorizontalAlignment="Center" Margin="5 0 5 0">
-                    <ListView x:Name="ActivityListView"
+            
+                <ListView x:Name="ActivityListView"
                               VirtualizingPanel.ScrollUnit="Pixel"
                               Background="Transparent"
-                              BorderThickness = "0">
+                              BorderThickness = "0"
+                              HorizontalContentAlignment="Stretch"
+                          Margin="10"
+                          Grid.Row="1">
+                    
                     <ListView.ItemContainerStyle>
                         <Style TargetType="ListViewItem">
                             <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
@@ -115,45 +120,61 @@
                     </ListView.ItemContainerStyle>
                     <ListView.ItemTemplate>
                             <DataTemplate>
-                                <Border Background="White" CornerRadius="12" Margin="0,10,0,10" Padding="15" Width="180">
-                                    <Border.ContextMenu>
-                                        <ContextMenu>
-                                            <MenuItem Header="Adauga in orar" Click="MenuAddtoSched_Click" />
-                                            <MenuItem Header="Modifica" Click="MenuModify_Click"/>
-                                            <Separator />
-                                            <MenuItem Header="Sterge" Foreground="Red" Click="MenuDelete_Click"/>
-                                        </ContextMenu>
-                                    </Border.ContextMenu>
-                                        
-                                    <Grid>
-                                            <Grid.RowDefinitions>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="Auto"/>
-                                                <RowDefinition Height="*"/>
-                                            </Grid.RowDefinitions>
+                            <Border x:Name="ActivityCard"
+                                    BorderBrush="#E8E6DF"
+                                    BorderThickness="0.5"
+                                    CornerRadius="8"
+                                    Background="White"
+                                    Margin="0,0,0,10"
+                                    Padding="14,12">
+                            <Border.ContextMenu>
+                                <ContextMenu>
+                                    <MenuItem Header="Adauga la orar" Click="MenuAddtoSched_Click"/>
+                                    <MenuItem Header="Modifica" Click="MenuModify_Click"/>
+                                    <Separator/>
+                                    <MenuItem Header="Sterge" Foreground="Red" Click="MenuDeleteDeadline_Click"/>
+                                </ContextMenu>
+                            </Border.ContextMenu>
+                            <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
 
-                                            <TextBlock Grid.Row="0"
-                                                       Foreground="Black"
-                                                       FontFamily="Inter 18pt"
-                                                       Text="{Binding name}" 
-                                                       FontSize="14" 
-                                                       FontWeight="Bold" 
-                                                       Margin="0,0,0,5" />
+                                    <!-- Colored left accent bar -->
+                                    <Border Grid.Column="0"
+                                            Width="4"
+                                            CornerRadius="2"
+                                            Margin="0,0,12,0"
+                                            Background="{Binding type, Converter={StaticResource TypeToColor}}"/>
 
-                                            <Rectangle Grid.Row="1" Fill="#7a7872" Height="1" Margin="0,0,0,10"/>
-
-                                            <TextBlock Grid.Row="2"
-                                                       Foreground="{Binding type, Converter={StaticResource TypeToColor}}"
-                                                       FontFamily="Bahnschrift Light"
-                                                       Text="{Binding TipulStr}"
-                                                       FontSize="11"
-                                                       TextWrapping="Wrap" />   
-                                    </Grid>
-                                </Border>
-                            </DataTemplate>
+                                    <!-- Activity info -->
+                                    <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding name}"
+                                               FontSize="14"
+                                               FontWeight="Medium"
+                                               Foreground="#2C2C2A"/>
+                                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0">
+                                            <Ellipse Width="7" Height="7"
+                                                 VerticalAlignment="Center"
+                                                 Margin="0,0,5,0"
+                                                 Fill="{Binding type, Converter={StaticResource TypeToColor}}"/>
+                                            <TextBlock Text="{Binding type, Converter={StaticResource TypeToRomanian}}"
+                                               FontSize="12"
+                                               Foreground="{Binding type, Converter={StaticResource TypeToColor}}"/>
+                                        </StackPanel>
+                                        <TextBlock Text="{Binding description}"
+                                           FontSize="12"
+                                           Foreground="#888780"
+                                           Margin="0,3,0,0"
+                                           TextTrimming="CharacterEllipsis"/>
+                                    </StackPanel>
+                                </Grid>
+                            </Border>
+                        </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
-                </WrapPanel>
+                
 
                 <StackPanel Grid.Row="2" Orientation="Vertical">
                     <Button Content="+ Noua activitate" Style="{StaticResource DashedButtonStyle}" Margin="10" Click="AddActivityWindow"/>

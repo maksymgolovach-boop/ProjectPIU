@@ -10,7 +10,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Activitate\LibrarieModele.csproj" />
-    <ProjectReference Include="..\ProjectPIU_ver1.0\ProjectPIU_ver1.0.csproj" />
     <ProjectReference Include="..\StocareOrar\NivelStocareDate.csproj" />
   </ItemGroup>
 

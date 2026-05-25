@@ -48,7 +48,8 @@ namespace LibrarieModele
 
         public bool IfOverlap(Scheduled_activity other)
         {
-            if (start_time <= other.end_time && end_time >= other.start_time)
+            if (other.end_time == end_time && other.start_time == start_time) return true;
+            if (start_time < other.end_time && end_time > other.start_time)
             {
                 return true;
             }

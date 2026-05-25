@@ -271,7 +271,9 @@
                                    Style="{StaticResource FieldLabel}"
                                    HorizontalAlignment="Stretch"/>
                         <ComboBox x:Name="StartTimeBox"
-                                  SelectionChanged="TimeBox_TextChanged"/>
+                                  SelectionChanged="TimeBox_TextChanged"
+                                  IsEditable="True"
+                                  />
                     </StackPanel>
 
                     <!-- End time -->
@@ -279,7 +281,8 @@
                         <TextBlock Text="Ora sfarsit"
                                    Style="{StaticResource FieldLabel}"/>
                         <ComboBox x:Name="EndTimeBox"
-                            SelectionChanged="TimeBox_TextChanged"/>
+                            SelectionChanged="TimeBox_TextChanged"
+                            IsEditable="True"/>
                     </StackPanel>
                     <Label Grid.Column="0" Grid.Row="2"
                            x:Name="TimeErrorLabel"

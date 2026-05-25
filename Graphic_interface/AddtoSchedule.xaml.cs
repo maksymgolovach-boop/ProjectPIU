@@ -59,13 +59,17 @@ namespace NivelWPF
         }
         private void TimeBox_TextChanged(object sender, SelectionChangedEventArgs e)
         {
-            if (TimeOnly.TryParse(StartTimeBox.Text, out TimeOnly start) && TimeOnly.TryParse(EndTimeBox.Text, out TimeOnly end))
+            if (StartTimeBox.SelectedItem is string start &&
+                    EndTimeBox.SelectedItem is string end)
             {
-                TimeSpan duration = end - start;
-                DurationText.Text = $"Duration: {duration.Hours}h {duration.Minutes}m";
-                TimeErrorLabel.Content = "";
-                StartTimeBox.BorderBrush = Brushes.LightGray;
-                EndTimeBox.BorderBrush = Brushes.LightGray;
+                var startTime = TimeOnly.Parse(start);
+                var endTime = TimeOnly.Parse(end);
+
+                if (endTime > startTime)
+                {
+                    TimeSpan duration = endTime - startTime;
+                    DurationText.Text = $"{duration.Hours}h";
+                }
             }
             else
             {

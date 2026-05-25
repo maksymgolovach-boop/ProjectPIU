@@ -1,0 +1,139 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Window x:Class="NivelWPF.AddDeadlineWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:NivelWPF"
+        mc:Ignorable="d"
+        Title="Nou termen" Height="400" Width="420"
+        Background="#F4F3ED" FontFamily="Segoe UI, Arial" FocusManager.FocusedElement="{Binding ElementName=ActivityComboBox}">
+
+    <Window.Resources>
+        <Style x:Key="FormLabelStyle" TargetType="TextBlock">
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Foreground" Value="#84827D"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+            <Setter Property="HorizontalAlignment" Value="Right"/>
+            <Setter Property="Grid.Column" Value="0"/>
+        </Style>
+
+        <Style x:Key="MainTextStyle" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#3F403D"/>
+            <Setter Property="FontSize" Value="13"/>
+        </Style>
+        <local:DateToColorConverter x:Key="DateToColor"/>
+        <local:DateToLightColorConverter x:Key="DateToLightColor"/>
+        <Style x:Key="AddButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="FontWeight" Value="Medium"/>
+            <Setter Property="Foreground" Value="#E6F1FB"/>
+            <Setter Property="Background" Value="#185FA5"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        CornerRadius="8"
+                        Padding="18,8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#0C447C"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#042C53"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        
+        <Style x:Key="CancelButton" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#5F5E5A"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border"
+                        Background="{TemplateBinding Background}"
+                        BorderBrush="#D3D1C7"
+                        BorderThickness="0.5"
+                        CornerRadius="8"
+                        Padding="16,8">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                      VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#F1EFE8"/>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="border" Property="Background" Value="#D3D1C7"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Text="Creeaza nou termen" Style="{StaticResource MainTextStyle}" FontSize="18" FontWeight="Bold" Margin="0,0,0,20"/>
+
+        <Grid Grid.Row="1" Margin="0,0,0,10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" MinWidth="110"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="40"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <TextBlock Text="Activitate" Style="{StaticResource FormLabelStyle}" Grid.Row="0"/>
+            <ComboBox x:Name="ActivityComboBox" Grid.Row="0" Grid.Column="1" VerticalAlignment="Center"
+                      Margin="0,0,0,5" Padding="5" SelectionChanged="ActivityComboBox_SelectionChanged"
+                      TextSearch.TextPath="name"
+                      IsEditable="True" IsReadOnly="False"
+                      DisplayMemberPath="name"
+                      />
+
+            <TextBlock Text="Nume" Style="{StaticResource FormLabelStyle}" Grid.Row="1"/>
+            <TextBox x:Name="NameTextBox" Grid.Row="1" Grid.Column="1" VerticalAlignment="Center"
+                     Margin="0,0,0,5" Padding="5" Foreground="#3F403D"/>
+
+            <TextBlock Text="Descriere" Style="{StaticResource FormLabelStyle}" Grid.Row="2" VerticalAlignment="Top" Margin="0,10,10,0"/>
+            <TextBox x:Name="DescriptionTextBox" Grid.Row="2" Grid.Column="1" Margin="0,5" Padding="5"
+                     TextWrapping="Wrap" AcceptsReturn="True" ScrollViewer.VerticalScrollBarVisibility="Auto" Height="Auto"/>
+
+            <TextBlock Text="Data limita" Style="{StaticResource FormLabelStyle}" Grid.Row="3"/>
+            <DatePicker x:Name="DueDatePicker" Grid.Row="3" Grid.Column="1" VerticalAlignment="Center" Margin="0,0,0,5"/>
+            <CheckBox x:Name="DeleteAfterExpires" Content="Sterge dupa atingere termin limita" Grid.Row="4" Grid.Column="1" VerticalAlignment="Center"/>
+        </Grid>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <Button Content="Anuleaza" Click="CancelButton_Click" Style="{StaticResource CancelButton}" Margin="0 0 15 0"/>
+            <Button Content="+ Adauga termen" Click="AddButton_Click" Style="{StaticResource AddButton}"/>
+        </StackPanel>
+
+    </Grid>
+</Window>

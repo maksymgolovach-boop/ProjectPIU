@@ -10,4 +10,21 @@
         Saturday = 6,
         Sunday = 7
     }
+
+    public static class WeekDaysTypeExtensions
+    {
+        public static string ToRomanianString(this WeekDays type)
+        {
+            return type switch
+            {
+                WeekDays.Monday => "Luni",
+                WeekDays.Tuesday => "Marți",
+                WeekDays.Wednesday => "Miercuri",
+                WeekDays.Thursday => "Joi",
+                WeekDays.Friday => "Vineri",
+                WeekDays.Saturday => "Sâmbătă",
+                WeekDays.Sunday => "Duminică",
+            };
+        }
+    }
 }

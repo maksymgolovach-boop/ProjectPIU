@@ -71,6 +71,11 @@ namespace NivelStocareDate
             }
         }
 
+        public void RemoveActivityFromDay(Scheduled_activity sched, WeekDays day)
+        {
+            scheduled_week[day].Remove(sched);
+        }
+
         //adaugare din lista de activitati la intervalul dat
         public void add_activity_fromList(Guid ID, TimeOnly start, TimeOnly end, WeekDays day)
         {

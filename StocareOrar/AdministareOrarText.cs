@@ -62,7 +62,7 @@ namespace NivelStocareDate
             {
                 string liniefisier;
                 string[] continut;
-                while((liniefisier = file.ReadLine()) != "\n")
+                while((liniefisier = file.ReadLine()) != null)
                 {
                     continut = liniefisier.Split(SEPARATOR_SECUNDAR_FISIER);
                     Enum.TryParse(continut[0], out WeekDays zi);
@@ -74,7 +74,8 @@ namespace NivelStocareDate
             }
             using (StreamWriter file = new StreamWriter(numeFisier, true))
             {
-                file.WriteLine(SchedActivity.ConversiePentruScriereFisier());
+                file.WriteLine(String.Format("{0} {1}",
+                day,SchedActivity.ConversiePentruScriereFisier()));
             }
         }
 
@@ -121,10 +122,24 @@ namespace NivelStocareDate
         public void RemoveActivitiesFromDay(Guid ID_toremove, WeekDays day)
         {
             var buffer = File.ReadAllLines(numeFisier);
-            string day_id = day.ToString() + SEPARATOR_SECUNDAR_FISIER + ID_toremove.ToString();
 
-            var newlines = buffer.Where(linie => !linie.StartsWith(day_id)).ToList();
-            Console.WriteLine(newlines.Count);
+            var newlines = buffer.Where(linie =>
+            {
+                if (string.IsNullOrEmpty(linie)) return false;
+                if(!linie.StartsWith(day.ToString())) return true;
+                string[] campuri = linie.Split(SEPARATOR_SECUNDAR_FISIER);
+                return !campuri[1].StartsWith(ID_toremove.ToString());
+            }).ToList();
+
+            File.WriteAllLines(numeFisier, newlines);
+        }
+        public void RemoveActivityFromDay(Scheduled_activity sched, WeekDays day)
+        {
+            var buffer = File.ReadAllLines(numeFisier);
+            string line_to_remove = day + SEPARATOR_SECUNDAR_FISIER + sched.ConversiePentruScriereFisier();
+
+            var newlines = buffer.Where(linie => linie.Trim() != line_to_remove.Trim()).ToList();
+
             File.WriteAllLines(numeFisier, newlines);
         }
         public void RemoveAllActivities(Activitate activity) // functia care va sterge toate activitatile din orar care match cu activitatea de la argument

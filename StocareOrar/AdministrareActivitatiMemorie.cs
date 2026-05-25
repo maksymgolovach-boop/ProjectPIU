@@ -11,8 +11,7 @@ namespace NivelStocareDate
     {
         private const string SEPARATOR_FISIER = ";";
         private const string SEPARATOR_SECUNDAR_FISIER = " ";
-        private const string SEPARATOR_TERTIAR = "-";
-
+        
         private Dictionary<Guid, Activitate> activitatiList; // lista cu activitati disponibile cu posibilitatea de adaugare a noii activitati
 
         public AdministrareActivitatiMemorie()
@@ -61,7 +60,7 @@ namespace NivelStocareDate
 
         public List<Activitate>? FindActivitiesByName(string NumeActivitate)
         {
-            if(activitatiList.Count == 0)
+            if (activitatiList.Count == 0)
             {
                 return null;
             }
@@ -82,13 +81,23 @@ namespace NivelStocareDate
 
         public string ActivitatiToFile()
         {
-            string List_pt_fisier= "";
+            string List_pt_fisier = "";
             foreach (Activitate act in activitatiList.Values)
             {
                 List_pt_fisier += act.ConversiePentruScriereFisier() + SEPARATOR_SECUNDAR_FISIER;
             }
             return List_pt_fisier;
         }
-
+        public void modifyActivity(Activitate modifiedActivity)
+        {
+            if (GetActivity(modifiedActivity.ID) != null)
+            {
+                activitatiList[modifiedActivity.ID] = modifiedActivity;
+            }
+            else
+            {
+                throw new Exception("Activitatea nu exista in lista!!!");
+            }
+        }
     }
 }

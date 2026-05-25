@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Graphic_interface
+namespace NivelWPF
 {
     public static class ManagerStocare
     {
         private const string FORMAT_SALVARE = "FormatSalvare";
         private const string NUME_ACTIVITATI_FISIER = "NumeActivitatiFisier";
+        private const string NUME_DEADLINES_FISIER = "NumeDeadlinesFisier";
         private const string NUME_ORAR_FISIER = "NumeOrarFisier";
 
         public static IstocareDateActivities GetAdministratorStocareActivitati() // administator stocare pentru activitati
@@ -30,9 +31,41 @@ namespace Graphic_interface
                 {
                     default:
                     case "txt":
-                        return new AdministareActivitatiText(caleCompletaFisier + "." + formatSalvare);
+                        string caleFisierTxt = caleCompletaFisier + "." + "txt";
+                        if (!File.Exists(caleFisierTxt))
+                            File.WriteAllText(caleFisierTxt, string.Empty);
+                        return new AdministareActivitatiText(caleFisierTxt);
                     case "memorie":
                         return new AdministrareActivitatiMemorie();
+                }
+            }
+
+            return null;
+        }
+
+        public static IstocareDateDeadline GetAdministratorStocareDeadlines() // administator stocare pentru deadlines
+        {
+            string formatSalvare = ConfigurationManager.AppSettings[FORMAT_SALVARE] ?? "";
+
+            string numeFisier = ConfigurationManager.AppSettings[NUME_DEADLINES_FISIER] ?? "";
+            string locatieFisierSolutie = Directory.GetParent(Directory.GetCurrentDirectory())?.Parent?.Parent?.FullName ?? "";
+            string caleCompletaFisier = locatieFisierSolutie + "\\" + numeFisier;
+
+            System.Diagnostics.Debug.WriteLine($"Path: '{caleCompletaFisier}'");
+            System.Diagnostics.Debug.WriteLine($"NumeFisier: '{numeFisier}'");
+
+            if (formatSalvare != null)
+            {
+                switch (formatSalvare)
+                {
+                    default:
+                    case "txt":
+                        string caleFisierTxt = caleCompletaFisier + "." + "txt";
+                        if (!File.Exists(caleFisierTxt))
+                            File.WriteAllText(caleFisierTxt, string.Empty);
+                        return new AdministrareDeadlinesText(caleFisierTxt);
+                    case "memorie":
+                        return new AdministrareDeadlinesMemorie();
                 }
             }
 
@@ -53,10 +86,14 @@ namespace Graphic_interface
                 switch (formatSalvare)
                 {
                     default:
+                    case "txt":
+                        string caleFisierTxt = caleCompletaFisier + "." + "txt";
+                        if (!File.Exists(caleFisierTxt))
+                            File.WriteAllText(caleFisierTxt, string.Empty);
+                        return new AdministareOrarText(caleFisierTxt, activitati);
+
                     case "memorie":
                         return new AdministrareOrarMemorie(activitati);
-                    case "txt":
-                        return new AdministareOrarText(caleCompletaFisier + "." + formatSalvare, activitati);
                 }
             }
             return null;

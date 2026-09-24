@@ -23,8 +23,8 @@ namespace NivelWPF
     {
         public Activitate SelectedActivity { get; set; }
         public Scheduled_activity Newscheduled_Activity;
-        private TimeOnly startTime;
         public WeekDays SelectedDay;
+        private TimeOnly startTime;
         private List<Activitate> activities;
         private class DisplayDays
         {

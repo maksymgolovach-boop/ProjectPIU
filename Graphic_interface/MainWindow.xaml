@@ -184,7 +184,8 @@
                                FontSize="14"
                                FontFamily="Segoe UI"
                                Foreground="#888780"
-                               Visibility="Collapsed"/>
+                               Visibility="Collapsed"
+                               Grid.Row="1"/>
 
             <StackPanel Grid.Row="2" Orientation="Vertical" HorizontalAlignment="Stretch">
                 <Button Content="+ Noua activitate" Style="{StaticResource DashedButtonStyle}" Margin="10" Click="AddActivityWindow" HorizontalAlignment="Stretch"/>

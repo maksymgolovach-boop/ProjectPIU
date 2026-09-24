@@ -22,6 +22,41 @@
             <Setter Property="FontFamily" Value="Segoe UI"/>
             <Setter Property="Foreground" Value="#2C2C2A"/>
         </Style>
+		
+		<!-- Search box style -->
+		<Style x:Key="SearchBox"  TargetType="TextBox">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="Foreground" Value="#2C2C2A"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="BorderBrush" Value="#D3D1C7"/>
+            <Setter Property="BorderThickness" Value="0.5"/>
+            <Setter Property="Padding" Value="6,0"/>
+            <Setter Property="Height" Value="36"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TextBox">
+                        <Border Background="{TemplateBinding Background}"
+                        BorderBrush="{TemplateBinding BorderBrush}"
+                        BorderThickness="{TemplateBinding BorderThickness}"
+                        CornerRadius="8">
+                            <ScrollViewer x:Name="PART_ContentHost"
+                                  Margin="{TemplateBinding Padding}"
+                                  VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="BorderBrush" Value="#B4B2A9"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#185FA5"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
 
         <!-- Section label style (uppercase muted label) -->
         <Style x:Key="SectionLabel" TargetType="TextBlock">
@@ -133,23 +168,56 @@
         </Style>
     </Window.Resources>
 
-    <Border Background="White" CornerRadius="12">
-        <StackPanel Margin="20">
+    <Border Background="White" CornerRadius="12" Margin="10">
+		<Grid Margin="10">
+			<Grid.RowDefinitions>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="Auto"/>
+				<RowDefinition Height="*"/>
+			    <RowDefinition Height="Auto"/>
+			</Grid.RowDefinitions>
+			
             <!-- Header -->
-            <TextBlock Text="SELECTARE ACTIVITATE"
+            <TextBlock Grid.Row="0" Text="SELECTARE ACTIVITATE"
                        Style="{StaticResource SectionLabel}"/>
 
-            <TextBlock Text="Alege o activitate din lista:"
+            <TextBlock Grid.Row="1" Text="Alege o activitate din lista:"
                        Style="{StaticResource FieldLabel}"
                        Margin="0,0,0,15"/>
+            
+			<!-- Activities Search-->
+            <Grid Grid.Row="2" Margin="10 0 10 0">
+                    <TextBox x:Name="SearchActivities" Style="{StaticResource SearchBox}" TextChanged="SearchActivities_TextChanged"/>
 
+                    <TextBlock Text="Cauta activitati..." 
+                               IsHitTestVisible="False" 
+                               Foreground="Gray" 
+                               VerticalAlignment="Center"
+                               Margin="15 0 0 0">
+                        <TextBlock.Style>
+                            <Style TargetType="TextBlock">
+                                <Setter Property="Visibility" Value="Collapsed"/>
+                                <Style.Triggers>
+                                    <!-- Shows the text only when the TextBox is empty -->
+                                    <DataTrigger Binding="{Binding Text, ElementName=SearchActivities}" Value="">
+                                        <Setter Property="Visibility" Value="Visible"/>
+                                    </DataTrigger>
+                                </Style.Triggers>
+                            </Style>
+                        </TextBlock.Style>
+                    </TextBlock>
+            </Grid>
+			
             <!-- Activities List -->
             <ListBox x:Name="ActivitiesListBox"
                      Background="Transparent"
                      BorderThickness="0"
                      ScrollViewer.VerticalScrollBarVisibility="Auto"
-                     Margin="0,0,0,20"
-                     Height="400">
+					 VirtualizingPanel.ScrollUnit="Pixel"
+					 Grid.Row="3"
+                     Margin="0,10,0,10"
+                     HorizontalContentAlignment="Stretch">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid>
@@ -192,16 +260,16 @@
             </ListBox>
 
             <!-- Empty state message -->
-            <TextBlock x:Name="EmptyMessage"
+            <TextBlock Grid.Row="2" x:Name="EmptyMessage"
                        Text="Nu sunt activitati disponibile."
                        Foreground="#888780"
                        FontSize="13"
                        TextAlignment="Center"
                        Visibility="Collapsed"
                        Margin="0,180,0,180"/>
-
+            
             <!-- Buttons -->
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,10,0,0">
+            <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,10,10">
                 <Button Content="Anulare"
                         Style="{StaticResource CancelButton}"
                         Click="Cancel_Click"
@@ -210,6 +278,6 @@
                         Style="{StaticResource ConfirmButton}"
                         Click="Confirm_Click"/>
             </StackPanel>
-        </StackPanel>
+		</Grid>
     </Border>
 </Window>

@@ -1,34 +1,47 @@
 ﻿using LibrarieModele;
 using LibrarieModele.enums;
 using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Media;
-
+using System.Windows.Media.Imaging;
+using System.Windows.Shapes;
 
 namespace NivelWPF
 {
     /// <summary>
-    /// Interaction logic for AddtoSchedule.xaml
+    /// Interaction logic for AddDirectlyToSchedule.xaml
     /// </summary>
-    public partial class AddtoSchedule : Window
+    public partial class AddDirectlyToSchedule : Window
     {
         public Activitate SelectedActivity { get; set; }
-        public WeekDays SelectedDay;
         public Scheduled_activity Newscheduled_Activity;
+        private TimeOnly startTime;
+        public WeekDays SelectedDay;
+        private List<Activitate> activities;
         private class DisplayDays
         {
             public WeekDays Value { get; set; }
             public string Day => Value.ToRomanianString();
         }
-        public AddtoSchedule(Activitate SelectedActivity)
+
+        public AddDirectlyToSchedule(WeekDays day, TimeOnly Starthour, List<Activitate> availableActivities)
         {
-            this.SelectedActivity = SelectedActivity;
+            this.startTime = Starthour;
+            this.activities = availableActivities;
+            this.SelectedDay = day;
+            this.SelectedActivity = null;
             this.DataContext = this;
             InitializeComponent();
             PopulateTimeComboBoxes();
-            SetSource();
+            SetComboBoxSources();
         }
 
         private void Cancel_Click(object sender, RoutedEventArgs e)
@@ -38,16 +51,21 @@ namespace NivelWPF
 
         private void AddToSched_Click(object sender, RoutedEventArgs e)
         {
-            TimeOnly startTime, endTime;
+            TimeOnly endTime;
             startTime = TimeOnly.Parse(StartTimeBox.Text);
-            endTime = TimeOnly.Parse(EndTimeBox.Text);     
-            
+            endTime = TimeOnly.Parse(EndTimeBox.Text);
+
+            if(SelectedActivity == null)
+            {
+                TimeErrorLabel.Content = "Selectati o activitate.";
+                return;
+            }
             if (startTime > endTime)
             {
                 TimeErrorLabel.Content = "Interval nevalid.";
                 return;
             }
-            if(DayPicker.SelectedValue == null)
+            if (DayPicker.SelectedValue == null)
             {
                 TimeErrorLabel.Content = "Selectati ziua.";
                 DayPicker.BorderBrush = Brushes.Red;
@@ -62,7 +80,7 @@ namespace NivelWPF
             if (StartTimeBox.SelectedItem is string start &&
                     EndTimeBox.SelectedItem is string end)
             {
-                var startTime = TimeOnly.Parse(start);
+                startTime = TimeOnly.Parse(start);
                 var endTime = TimeOnly.Parse(end);
 
                 if (endTime > startTime)
@@ -78,13 +96,14 @@ namespace NivelWPF
                 EndTimeBox.BorderBrush = Brushes.Red;
             }
         }
-        private void SetSource()
+        private void SetComboBoxSources()
         {
             List<DisplayDays> days = Enum.GetValues(typeof(WeekDays))
                 .Cast<WeekDays>()
                 .Select(d => new DisplayDays { Value = d })
                 .ToList();
             DayPicker.ItemsSource = days;
+            DayPicker.SetValue(ComboBox.SelectedValueProperty, SelectedDay);
         }
         private void PopulateTimeComboBoxes()
         {
@@ -98,8 +117,25 @@ namespace NivelWPF
             StartTimeBox.ItemsSource = times;
             EndTimeBox.ItemsSource = times;
 
-            StartTimeBox.SelectedIndex = 0;
-            EndTimeBox.SelectedIndex = 1;
+            StartTimeBox.Text = startTime.ToString("HH:mm");
+            EndTimeBox.Text = startTime.AddHours(1).ToString("HH:mm");
+        }
+        private void changeActivity_Click(object sender, RoutedEventArgs e)
+        {
+            if (activities == null || activities.Count == 0)
+            {
+                MessageBox.Show("Nu sunt activitati disponibile.", "Selectare activitate", MessageBoxButton.OK, MessageBoxImage.Information);
+                return;
+            }
+
+            SelectActivityDialog dialog = new SelectActivityDialog(activities);
+            if (dialog.ShowDialog() == true)
+            {
+                SelectedActivity = dialog.SelectedActivity;
+                // Force UI update by refreshing the data context
+                this.DataContext = null;
+                this.DataContext = this;
+            }
         }
     }
 }

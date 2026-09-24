@@ -102,42 +102,5 @@ namespace NivelStocareDate
             }
             scheduled_week[day].Insert(pos, new Scheduled_activity(ID, start, end));
         }
-
-        //returneaza sirul de caractere orarului
-        public string getOrarStr()
-        {
-            string buffer = "";
-            foreach (var key in scheduled_week.Keys)
-            {
-                buffer += "<---------- " + key.ToString() + " ---------->\n";
-                foreach (Scheduled_activity act in scheduled_week[key])
-                {
-                    buffer += act.INFO(activitatiList.GetActivity(act.ID)) + "\n";
-                }
-            }
-            return buffer;
-        }
-
-        // Cuarata intervalul de timp dat in orar
-        public void clearinterval(TimeOnly inceput, TimeOnly sfarsit, WeekDays day)
-        {
-            var testSActivity = new Scheduled_activity(Guid.NewGuid(), inceput, sfarsit);
-            scheduled_week[day].RemoveAll(a => a.IfOverlap(testSActivity));
-        }
-        
-        public string ConversiaLaString()
-        {
-            string orar_pt_fisier = "";
-            foreach(var day in scheduled_week.Keys)
-            {
-                foreach(Scheduled_activity act in scheduled_week[day])
-                {
-                    orar_pt_fisier  += day.ToString() + SEPARATOR_SECUNDAR_FISIER + act.ConversiePentruScriereFisier() + "\n";
-                }
-            }
-            // orar_pt_fisier = zi;id;start;stop;
-            return orar_pt_fisier;
-        }
-        
     }
 }

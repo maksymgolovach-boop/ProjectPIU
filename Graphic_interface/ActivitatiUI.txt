@@ -1,5 +1,4 @@
-dd138b57-56cb-46ba-8d3c-1ffefc0b5673;Proiect PIU;proiect orar personal;Project
-e0c053da-7dfc-4387-946c-3ce04d391135;Asculta Germana;Invat germana;Learning
-e47819cb-3ab1-4ee4-9536-750184b48a68;Munte;Mergem la munte cu colegii;Resting
+dd138b57-56cb-46ba-8d3c-1ffefc0b5673;Proiect PIU;Aplicatie "Orar personal";Project
 8ec2d67a-30a7-47c6-8271-9aa5dff0535a;Practica chitara;;SelfImprovement
 bf53b51f-4053-4dac-9bdc-f93a84ad8151;Curs RC;curs retele calculatoare;Education
+bf7f5038-b94b-4c7b-bc91-5897c13c3f90;Study Verilog;Study Verilog pentru practica la amd;Learning

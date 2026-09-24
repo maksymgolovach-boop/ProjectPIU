@@ -105,20 +105,6 @@ namespace NivelStocareDate
                 file.WriteLine(day + SEPARATOR_SECUNDAR_FISIER + sactivity.ConversiePentruScriereFisier());
             }
         }
-        public string getOrarStr()
-        {
-            string buffer = "";
-            Dictionary<WeekDays, List<Scheduled_activity>> orar = this.GetOrar();
-            foreach (var key in orar.Keys)
-            {
-                buffer += "<---------- " + key.ToString() + " ---------->\n";
-                foreach (Scheduled_activity act in orar[key])
-                {
-                    buffer += act.INFO(activitati.GetActivity(act.ID))  + "\n";
-                }
-            }
-            return buffer;
-        }
         public void RemoveActivitiesFromDay(Guid ID_toremove, WeekDays day)
         {
             var buffer = File.ReadAllLines(numeFisier);

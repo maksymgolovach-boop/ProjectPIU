@@ -81,6 +81,9 @@ namespace NivelStocareDate
         {
             if (numeFisierActivitati == null)
                 throw new ArgumentNullException("Fisierul nu a fost gasit sau nu exista!!!");
+            if(ActivitytoRemove == null)
+                throw new ArgumentNullException("Activitatea nu a fost gasita sau nu exista!!!");
+
             string IDtoremove = ActivitytoRemove.ID.ToString();
             var filelines = File.ReadAllLines(numeFisierActivitati);
             var newfilelines = filelines.Where(activity => !activity.StartsWith(IDtoremove));

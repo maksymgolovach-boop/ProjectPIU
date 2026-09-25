@@ -143,10 +143,18 @@ ProjectPIU_ver1.0/
 For questions or feedback about the project, please visit the [GitHub repository](https://github.com/maksymgolovach-boop/ProjectPIU).
 
 ## New Features to be Added:
+
 1. **Info window for deadlines**
 2. **Modify button for activities in schedule**
 3. **Add unit testing**
 4. **Settings for another languages**
+=======
+1. **User friendly info window for activities in schedule and list**
+2. **Info window for deadlines**
+3. **Modify button for activities in schedule**
+4. **Add unit testing**
+5. **Settings for another languages**
+
 
 ---
 

@@ -1,3 +1,5 @@
 Tuesday dd138b57-56cb-46ba-8d3c-1ffefc0b5673;12:00;14:00
 Wednesday 8ec2d67a-30a7-47c6-8271-9aa5dff0535a;11:00;13:00
 Friday bf53b51f-4053-4dac-9bdc-f93a84ad8151;08:00;11:00
+Thursday bf7f5038-b94b-4c7b-bc91-5897c13c3f90;11:00;15:00
+Sunday e799a5b9-3ab0-492e-bee2-5a9ab77329df;15:00;16:00

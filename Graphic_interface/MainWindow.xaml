@@ -399,7 +399,7 @@
                                 BorderThickness="1" Margin="1" CornerRadius="2" Padding="5">
                                     <Border.ContextMenu>
                                         <ContextMenu>
-                                            <MenuItem Header="Info" Click="InfoInSchedule_Click"/>
+                                            <MenuItem x:Name="InfoMenuItem" Header="Info" Click="InfoInSchedule_Click"/>
                                             <Separator />
                                             <MenuItem Header="Elimina" Click="DeleteFromSchedule_Click" Foreground="Red" />
                                         </ContextMenu>
@@ -417,8 +417,8 @@
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
                     <!-- Popup for custom info -->
-                    <Popup x:Name="CustomInfoPopup" PlacementTarget="{Binding ElementName=Data}" 
-                        Placement="Bottom" StaysOpen="False" AllowsTransparency="True"
+                    <Popup x:Name="CustomInfoPopup" PlacementTarget="{Binding ElementName=InfoMenuItem}" 
+                        Placement="Center" StaysOpen="False" AllowsTransparency="True"
                            MaxHeight="300"
                            MaxWidth="450">
                         <Border x:Name="PopUpBorder" Background="White" CornerRadius="8" Padding="12" BorderBrush="{Binding type, Converter={StaticResource TypeToColor}}" BorderThickness="2">
@@ -557,6 +557,34 @@
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    <!-- Deadline Info Popup -->
+                    <Popup x:Name="CustomInfoPopupDeadline" PlacementTarget="{Binding ElementName=InfoMenuItem}" 
+   Placement="Center" StaysOpen="False" AllowsTransparency="True"
+   MaxHeight="250"
+   MaxWidth="300">
+
+                        <Border x:Name="DeadlinePopUpBorder" Background="White" CornerRadius="8" Padding="12" BorderBrush="{Binding DueDate, Converter={StaticResource DateToColor}}" BorderThickness="2">
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontFamily" Value="Segoe UI"/>
+                                        <Setter Property="FontSize" Value="12"/>
+                                        <Setter Property="Margin" Value="2"/>
+                                    </Style>
+                                </StackPanel.Resources>
+
+                                <TextBlock x:Name="DeadlineNameInfo" FontWeight="Bold" Foreground="Black"/>
+                                <TextBlock x:Name="DeadlineDueDate" Foreground="{Binding DueDate, Converter={StaticResource DateToColor}}"/>
+                                <TextBlock x:Name="DeadlineAsociatedActivity" Foreground="Black"/>
+                                <Border Background="#f5f4ed" CornerRadius="4" Padding="4" BorderThickness="1" BorderBrush="{Binding DueDate, Converter={StaticResource DateToColor}}"
+                Margin="2">
+                                    <ScrollViewer>
+                                        <TextBlock x:Name="DeadlineDescriptionInfo" Foreground="Black"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
 
                     <!-- Empty state message -->
                     <TextBlock x:Name="EmptyDeadlinesMessage"

@@ -334,12 +334,15 @@ namespace NivelWPF
         {
             var selectedDeadline = (Deadline)DeadlinesListView.SelectedItem;
             if (selectedDeadline == null) return;
-            var activityName = activities.GetActivity(selectedDeadline.ID)?.name ?? "N/A";
-            MessageBox.Show(
-                $"Deadline: '{selectedDeadline.Name}'\nData scadenta: {selectedDeadline.DisplayDueDate}\nActivitate asociata: {activityName}",
-                "Info Deadline",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            var activityName = activities.GetActivity(selectedDeadline.ID)?.name ?? "Nu este asociat cu o activitate";
+
+            CustomInfoPopupDeadline.DataContext = selectedDeadline;
+            DeadlineNameInfo.Text = selectedDeadline.Name;
+            DeadlineDueDate.Text = selectedDeadline.DisplayDueDate;
+            DeadlineAsociatedActivity.Text = activityName;
+            DeadlineDescriptionInfo.Text = selectedDeadline.Description ?? "Nu exista o descriere pentru acest deadline.";
+
+            CustomInfoPopupDeadline.IsOpen = true;
         }
 
         private void MenuDeleteDeadline_Click(object sender, RoutedEventArgs e)

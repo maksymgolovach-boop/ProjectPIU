@@ -1,5 +1,4 @@
-﻿using System.ComponentModel.Design.Serialization;
-using LibrarieModele.enums;
+﻿using LibrarieModele.enums;
 
 namespace LibrarieModele
 {
@@ -52,10 +51,10 @@ namespace LibrarieModele
             Enum.TryParse(FisierActivitate[TYPE_pos], out ActivityType type);
             this.type = type;
         }
-        
+
         public string ConversiePentruScriereFisier()
         {
-            string ObjActivitateFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}", 
+            string ObjActivitateFisier = string.Format("{1}{0}{2}{0}{3}{0}{4}",
                 SEPARATOR_FISIER,
                 this.ID.ToString(),
                 this.name ?? ("NEDEFINIT"),

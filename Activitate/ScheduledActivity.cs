@@ -1,11 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibrarieModele
+﻿namespace LibrarieModele
 {
     public class Scheduled_activity //clasa ce va contine activitatea cu ora start si ora stop
     {
@@ -55,7 +48,7 @@ namespace LibrarieModele
             }
             return false;
         }
-        public string INFO(Activitate  activity)
+        public string INFO(Activitate activity)
         {
             return $"{start_time}-{end_time} : {activity.name}";
         }

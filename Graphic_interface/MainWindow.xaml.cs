@@ -92,12 +92,12 @@ namespace NivelWPF
                 UIActivities.Add(act);
             }
         }
-        private void PopulateActivitiesList() 
+        private void PopulateActivitiesList()
         {
             var initialActivitiesData = activities.GetActivitiesValues();
             foreach (var act in initialActivitiesData) UIActivities.Add(act);
 
-            UIActivities.CollectionChanged += (s,e) => updateActivityListMessage();
+            UIActivities.CollectionChanged += (s, e) => updateActivityListMessage();
             updateActivityListMessage();
         }
 
@@ -215,18 +215,24 @@ namespace NivelWPF
             var menuItem = sender as MenuItem;
             var selectedItem = menuItem?.DataContext as ActivityViewItem;
             if (selectedItem == null) return;
+
             if (activities.GetActivity(selectedItem.Sched.ID) == null)
             {
-                MessageBox.Show("Detaliile activitatii nu sunt disponibile.", "Informații indisponibile", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Activitatea nu este disponibilă.", "Informații indisponibile", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            var activityDetails = activities.GetActivity(selectedItem.Sched.ID);
-            var descriere = activityDetails.description.Length > 0 ? activityDetails.description : "Nu exista";
-            MessageBoxResult result = MessageBox.Show(
-                $"Activitatea '{selectedItem.Name}' \nDescrierea: {descriere}",
-                "Info",
-                MessageBoxButton.OKCancel,
-                MessageBoxImage.Information);
+            var activity = activities.GetActivity(selectedItem.Sched.ID);
+            var descriere = activity.description.Length > 0 ? activity.description : "Nu exista";
+
+            DescriptionInfo.Text = descriere;
+            NameInfo.Text = activity.name;
+            DayTimeInfo.Text = $"{selectedItem.Sched.start_time:HH:mm} - {selectedItem.Sched.end_time:HH:mm}";
+
+            // Set DataContext for TypeInfo so the binding works
+            PopUpBorder.DataContext = selectedItem;
+            TypeInfo.Text = "● " + activity.type.ToRomanianString();
+
+            CustomInfoPopup.IsOpen = true;
         }
 
         private void DeleteFromSchedule_Click(object sender, RoutedEventArgs e)
@@ -328,12 +334,15 @@ namespace NivelWPF
         {
             var selectedDeadline = (Deadline)DeadlinesListView.SelectedItem;
             if (selectedDeadline == null) return;
-            var activityName = activities.GetActivity(selectedDeadline.ID)?.name ?? "N/A";
-            MessageBox.Show(
-                $"Deadline: '{selectedDeadline.Name}'\nData scadenta: {selectedDeadline.DisplayDueDate}\nActivitate asociata: {activityName}",
-                "Info Deadline",
-                MessageBoxButton.OK,
-                MessageBoxImage.Information);
+            var activityName = activities.GetActivity(selectedDeadline.ID)?.name ?? "Nu este asociat cu o activitate";
+
+            CustomInfoPopupDeadline.DataContext = selectedDeadline;
+            DeadlineNameInfo.Text = selectedDeadline.Name;
+            DeadlineDueDate.Text = selectedDeadline.DisplayDueDate;
+            DeadlineAsociatedActivity.Text = activityName;
+            DeadlineDescriptionInfo.Text = selectedDeadline.Description ?? "Nu exista o descriere pentru acest deadline.";
+
+            CustomInfoPopupDeadline.IsOpen = true;
         }
 
         private void MenuDeleteDeadline_Click(object sender, RoutedEventArgs e)
@@ -366,7 +375,7 @@ namespace NivelWPF
                 };
             }
         }
-        
+
         private void AddDeadlineWindow(object sender, RoutedEventArgs e)
         {
             AddDeadlineWindow dialog = new AddDeadlineWindow(activities.GetActivitiesValues());

@@ -1,12 +1,5 @@
 ﻿using LibrarieModele;
 using LibrarieModele.enums;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NivelStocareDate
 {
@@ -43,7 +36,7 @@ namespace NivelStocareDate
             {
                 string liniefisier;
                 string[] linie;
-                while((liniefisier = file.ReadLine()) != null )
+                while ((liniefisier = file.ReadLine()) != null)
                 {
                     linie = liniefisier.Split(SEPARATOR_SECUNDAR_FISIER);
                     Enum.TryParse(linie[DAY_POS], out WeekDays zi);
@@ -53,16 +46,16 @@ namespace NivelStocareDate
             }
             return orar;
         }
-        
+
         //adaugare activitate in orar
         // Posibil sa apare un conflict daca scheduled_activity exista dar informatia totala - nu, aceasta problema se va reusi daca Scheduled_activity va primi ca argument activitatea completa
         public void add_ScheduledActivity_toSchedule(Scheduled_activity SchedActivity, WeekDays day)
         {
-            using(StreamReader file = new StreamReader(numeFisier))
+            using (StreamReader file = new StreamReader(numeFisier))
             {
                 string liniefisier;
                 string[] continut;
-                while((liniefisier = file.ReadLine()) != null)
+                while ((liniefisier = file.ReadLine()) != null)
                 {
                     continut = liniefisier.Split(SEPARATOR_SECUNDAR_FISIER);
                     Enum.TryParse(continut[0], out WeekDays zi);
@@ -75,7 +68,7 @@ namespace NivelStocareDate
             using (StreamWriter file = new StreamWriter(numeFisier, true))
             {
                 file.WriteLine(String.Format("{0} {1}",
-                day,SchedActivity.ConversiePentruScriereFisier()));
+                day, SchedActivity.ConversiePentruScriereFisier()));
             }
         }
 
@@ -112,7 +105,7 @@ namespace NivelStocareDate
             var newlines = buffer.Where(linie =>
             {
                 if (string.IsNullOrEmpty(linie)) return false;
-                if(!linie.StartsWith(day.ToString())) return true;
+                if (!linie.StartsWith(day.ToString())) return true;
                 string[] campuri = linie.Split(SEPARATOR_SECUNDAR_FISIER);
                 return !campuri[1].StartsWith(ID_toremove.ToString());
             }).ToList();
@@ -134,7 +127,7 @@ namespace NivelStocareDate
             var buffer = File.ReadAllLines(numeFisier);
             var newlines = buffer.Where(linie =>
             {
-                if(string.IsNullOrEmpty(linie)) return false;
+                if (string.IsNullOrEmpty(linie)) return false;
                 string[] campuri = linie.Split(SEPARATOR_SECUNDAR_FISIER);
                 return !campuri[1].StartsWith(ID_toremove);
             }).ToList();

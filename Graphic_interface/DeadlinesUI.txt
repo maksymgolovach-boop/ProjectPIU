@@ -1,0 +1,2 @@
+dd138b57-56cb-46ba-8d3c-1ffefc0b5673;Proiect PIU;Aplicatie "Orar personal";True;2026-10-30T00:00:00.0000000
+e91ca155-2fc8-4f41-8783-f2f3f4e17cf5;Fotosesie;Fotosesie cu Ana;False;2026-09-30T00:00:00.0000000

@@ -1,17 +1,7 @@
 ﻿using LibrarieModele;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using LibrarieModele.enums;
-using System.Collections.ObjectModel;
+using System.Windows;
+using System.Windows.Media;
 
 namespace NivelWPF
 {
@@ -20,8 +10,8 @@ namespace NivelWPF
     /// </summary>
     public partial class AddActivityWindow : Window
     {
-        public Activitate newAcitivity {  get; set; }
-        
+        public Activitate newAcitivity { get; set; }
+
         public class ActivityTypeViewModel
         {
             public ActivityType Value { get; set; }
@@ -30,7 +20,7 @@ namespace NivelWPF
 
         public AddActivityWindow()
         {
-            
+
             InitializeComponent();
             SetSources();
         }

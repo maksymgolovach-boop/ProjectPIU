@@ -1,10 +1,4 @@
 ﻿using LibrarieModele;
-using LibrarieModele.enums;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NivelStocareDate
 {
@@ -81,7 +75,7 @@ namespace NivelStocareDate
         {
             if (numeFisierActivitati == null)
                 throw new ArgumentNullException("Fisierul nu a fost gasit sau nu exista!!!");
-            if(ActivitytoRemove == null)
+            if (ActivitytoRemove == null)
                 throw new ArgumentNullException("Activitatea nu a fost gasita sau nu exista!!!");
 
             string IDtoremove = ActivitytoRemove.ID.ToString();

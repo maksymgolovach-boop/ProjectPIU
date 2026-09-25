@@ -10,6 +10,7 @@ A modern desktop application for managing your personal schedule, activities, an
 - [Installation](#installation)
 - [Running the Application](#running-the-application)
 - [Project Structure](#project-structure)
+- [Features to be added](#new-features-to-be-added)
 
 ## ✨ Key Features
 
@@ -54,13 +55,6 @@ The application follows a layered architecture with three main projects:
 - **NivelWPF** (Graphic Interface Layer): The presentation layer with WPF windows and controls
 - **LibrarieModele** (Models/Business Logic Layer): Core domain models and business logic
 - **NivelStocareDate** (Data Storage Layer): Data persistence layer supporting multiple storage mechanisms
-
-## 📋 Requirements
-
-- **Operating System**: Windows 10 or later
-- **.NET Runtime**: .NET 8 or later
-- **RAM**: Minimum 2 GB
-- **Disk Space**: Minimum 500 MB
 
 ## 🚀 Installation
 
@@ -144,74 +138,16 @@ ProjectPIU_ver1.0/
 └── README.md
 ```
 
-## 📖 Usage Guide
-
-### Getting Started
-
-1. **Launch the Application**: Run the executable or start from Visual Studio
-2. **Main Window**: You'll see the personal schedule view with three main sections
-
-### Managing Activities
-
-1. **Add Activity**: 
-   - Click the "Add Activity" button
-   - Enter activity name and description
-   - Select activity type from the dropdown
-   - Click "Add" to create
-
-2. **Search Activity**:
-   - Use the search box to find activities by name
-   - Results update as you type
-
-3. **Modify Activity**:
-   - Select an activity from the list
-   - Click "Modify" to edit its details
-   - Update the information and save
-
-4. **Delete Activity**:
-   - Select an activity and click "Delete" to remove it
-
-### Managing Deadlines
-
-1. **Add Deadline**:
-   - Click "Add Deadline"
-   - Select a date and enter deadline details
-   - Confirm to add to your deadline list
-
-2. **View & Manage**:
-   - See all deadlines in the dedicated section
-   - Modify or delete as needed
-
-### Scheduling Activities
-
-1. **Add to Schedule**:
-   - Click "Add to Schedule"
-   - Select the activity and the day/time
-   - Save to add it to your weekly schedule
-
-2. **View Schedule**:
-   - See your complete weekly schedule
-   - Activities are color-coded by type
-
-3. **Remove from Schedule**:
-   - Select an activity from a specific day
-   - Click "Remove" to delete from that day only
-
-## 🛠️ Development
-
-To contribute or extend the application:
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/YourFeature`)
-3. Make your changes
-4. Commit your changes (`git commit -m 'Add YourFeature'`)
-5. Push to the branch (`git push origin feature/YourFeature`)
-6. Open a Pull Request
-
 ## 📧 Support
 
 For questions or feedback about the project, please visit the [GitHub repository](https://github.com/maksymgolovach-boop/ProjectPIU).
 
+## New Features to be Added:
+1. **Info window for deadlines**
+2. **Modify button for activities in schedule**
+3. **Add unit testing**
+4. **Settings for another languages**
+
 ---
 
-**Enjoy organizing your schedule with ProjectPIU!** 📅✨
+**Enjoy organizing your schedule with Personal Schedule Manager!** 📅✨

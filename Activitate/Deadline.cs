@@ -1,16 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace LibrarieModele
+﻿namespace LibrarieModele
 {
     public class Deadline
     {
         public const char SEPARATOR_FISIER = ';';
-        public const char SEPARATOR_SECUNDAR_FISIER= ' ';
+        public const char SEPARATOR_SECUNDAR_FISIER = ' ';
 
         private const int ID_pos = 0;
         private const int NUME_pos = 1;
@@ -67,7 +60,7 @@ namespace LibrarieModele
                 Name,
                 Description,
                 DeleteAfterExpiration.ToString(),
-                DueDate.ToString("o") 
+                DueDate.ToString("o")
             );
         }
     }

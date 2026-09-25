@@ -65,7 +65,7 @@ namespace NivelStocareDate
         public void RemoveAllActivities(Activitate activitytoremove)
         {
             Guid id = activitytoremove.ID;
-            foreach(var key in scheduled_week.Keys)
+            foreach (var key in scheduled_week.Keys)
             {
                 scheduled_week[key].RemoveAll(activity => activity.ID == id);
             }

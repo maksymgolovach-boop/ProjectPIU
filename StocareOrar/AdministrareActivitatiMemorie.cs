@@ -1,9 +1,4 @@
 ﻿using LibrarieModele;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NivelStocareDate
 {
@@ -11,7 +6,7 @@ namespace NivelStocareDate
     {
         private const string SEPARATOR_FISIER = ";";
         private const string SEPARATOR_SECUNDAR_FISIER = " ";
-        
+
         private Dictionary<Guid, Activitate> activitatiList; // lista cu activitati disponibile cu posibilitatea de adaugare a noii activitati
 
         public AdministrareActivitatiMemorie()

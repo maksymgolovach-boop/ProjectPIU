@@ -92,12 +92,12 @@ namespace NivelWPF
                 UIActivities.Add(act);
             }
         }
-        private void PopulateActivitiesList() 
+        private void PopulateActivitiesList()
         {
             var initialActivitiesData = activities.GetActivitiesValues();
             foreach (var act in initialActivitiesData) UIActivities.Add(act);
 
-            UIActivities.CollectionChanged += (s,e) => updateActivityListMessage();
+            UIActivities.CollectionChanged += (s, e) => updateActivityListMessage();
             updateActivityListMessage();
         }
 
@@ -375,7 +375,7 @@ namespace NivelWPF
                 };
             }
         }
-        
+
         private void AddDeadlineWindow(object sender, RoutedEventArgs e)
         {
             AddDeadlineWindow dialog = new AddDeadlineWindow(activities.GetActivitiesValues());

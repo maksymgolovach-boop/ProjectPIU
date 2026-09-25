@@ -1,7 +1,5 @@
 ﻿using LibrarieModele;
 using LibrarieModele.enums;
-using System;
-using System.Linq;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
@@ -40,14 +38,14 @@ namespace NivelWPF
         {
             TimeOnly startTime, endTime;
             startTime = TimeOnly.Parse(StartTimeBox.Text);
-            endTime = TimeOnly.Parse(EndTimeBox.Text);     
-            
+            endTime = TimeOnly.Parse(EndTimeBox.Text);
+
             if (startTime > endTime)
             {
                 TimeErrorLabel.Content = "Interval nevalid.";
                 return;
             }
-            if(DayPicker.SelectedValue == null)
+            if (DayPicker.SelectedValue == null)
             {
                 TimeErrorLabel.Content = "Selectati ziua.";
                 DayPicker.BorderBrush = Brushes.Red;

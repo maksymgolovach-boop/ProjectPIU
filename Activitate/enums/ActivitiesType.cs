@@ -1,7 +1,4 @@
-﻿using System.Drawing;
-using System.Globalization;
-
-namespace LibrarieModele.enums
+﻿namespace LibrarieModele.enums
 {
     public enum ActivityType
     {

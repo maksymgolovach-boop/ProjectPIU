@@ -45,6 +45,7 @@
         <local:DateToColorConverter x:Key="DateToColor"/>
         <local:DateToLightColorConverter x:Key="DateToLightColor"/>
         <local:ActivityTypeToRomanianConverter x:Key="TypeToRomanian"/>
+        <local:ActivityTypeToColorConverter x:Key="TypeToColor"/>
     </Window.Resources>
 
     <Grid>
@@ -225,7 +226,7 @@
                 <RowDefinition Height="30"/>
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
-
+            
             <!-- Zile -->
             <Grid Grid.Row="0">
                 <Grid.ColumnDefinitions>
@@ -415,6 +416,33 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+                    <!-- Popup for custom info -->
+                    <Popup x:Name="CustomInfoPopup" PlacementTarget="{Binding ElementName=Data}" 
+                        Placement="Bottom" StaysOpen="False" AllowsTransparency="True"
+                           MaxHeight="300"
+                           MaxWidth="450">
+                        <Border x:Name="PopUpBorder" Background="White" CornerRadius="8" Padding="12" BorderBrush="{Binding type, Converter={StaticResource TypeToColor}}" BorderThickness="2">
+                            <StackPanel>
+                                <StackPanel.Resources>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="FontFamily" Value="Segoe UI"/>
+                                        <Setter Property="FontSize" Value="12"/>
+                                        <Setter Property="Margin" Value="2"/>
+                                    </Style>
+                                </StackPanel.Resources>
+                                
+                                <TextBlock x:Name="NameInfo" FontWeight="Bold" Foreground="Black"/>
+                                <TextBlock x:Name="TypeInfo" Foreground="{Binding type, Converter={StaticResource TypeToColor}}"/>
+                                <TextBlock x:Name="DayTimeInfo" Foreground="Black"/>
+                                <Border Background="#f5f4ed" CornerRadius="4" Padding="4" BorderThickness="1" BorderBrush="{Binding type, Converter={StaticResource TypeToColor}}"
+                                        Margin="2">
+                                    <ScrollViewer>
+                                        <TextBlock x:Name="DescriptionInfo" Foreground="Black"/>
+                                    </ScrollViewer>
+                                </Border>
+                            </StackPanel>
+                        </Border>
+                    </Popup>
                 </Grid>
             </ScrollViewer>
         </Grid>

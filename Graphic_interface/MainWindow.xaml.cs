@@ -215,18 +215,24 @@ namespace NivelWPF
             var menuItem = sender as MenuItem;
             var selectedItem = menuItem?.DataContext as ActivityViewItem;
             if (selectedItem == null) return;
+
             if (activities.GetActivity(selectedItem.Sched.ID) == null)
             {
-                MessageBox.Show("Detaliile activitatii nu sunt disponibile.", "Informații indisponibile", MessageBoxButton.OK, MessageBoxImage.Information);
+                MessageBox.Show("Activitatea nu este disponibilă.", "Informații indisponibile", MessageBoxButton.OK, MessageBoxImage.Information);
                 return;
             }
-            var activityDetails = activities.GetActivity(selectedItem.Sched.ID);
-            var descriere = activityDetails.description.Length > 0 ? activityDetails.description : "Nu exista";
-            MessageBoxResult result = MessageBox.Show(
-                $"Activitatea '{selectedItem.Name}' \nDescrierea: {descriere}",
-                "Info",
-                MessageBoxButton.OKCancel,
-                MessageBoxImage.Information);
+            var activity = activities.GetActivity(selectedItem.Sched.ID);
+            var descriere = activity.description.Length > 0 ? activity.description : "Nu exista";
+
+            DescriptionInfo.Text = descriere;
+            NameInfo.Text = activity.name;
+            DayTimeInfo.Text = $"{selectedItem.Sched.start_time:HH:mm} - {selectedItem.Sched.end_time:HH:mm}";
+
+            // Set DataContext for TypeInfo so the binding works
+            PopUpBorder.DataContext = selectedItem;
+            TypeInfo.Text = "● " + activity.type.ToRomanianString();
+
+            CustomInfoPopup.IsOpen = true;
         }
 
         private void DeleteFromSchedule_Click(object sender, RoutedEventArgs e)

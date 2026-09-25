@@ -144,17 +144,9 @@ For questions or feedback about the project, please visit the [GitHub repository
 
 ## New Features to be Added:
 
-1. **Info window for deadlines**
-2. **Modify button for activities in schedule**
-3. **Add unit testing**
-4. **Settings for another languages**
-=======
-1. **User friendly info window for activities in schedule and list**
-2. **Info window for deadlines**
-3. **Modify button for activities in schedule**
-4. **Add unit testing**
-5. **Settings for another languages**
-
+1. **Modify button for activities in schedule**
+2. **Add unit testing**
+3. **Settings for another languages**
 
 ---
 
